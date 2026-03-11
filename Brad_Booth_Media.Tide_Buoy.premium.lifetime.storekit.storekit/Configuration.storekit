@@ -15,22 +15,6 @@
   ],
   "products" : [
     {
-      "displayPrice" : "3.00",
-      "familyShareable" : false,
-      "internalID" : "44ECB148",
-      "localizations" : [
-        {
-          "description" : "Yearly premium access for surf data, map spots, and future tides.",
-          "displayName" : "Tide Buoy Premium (Yearly)",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "Brad_Booth_Media.Tide_Buoy.premium.yearly",
-      "promotionalImageID" : "C6CAD636",
-      "referenceName" : "Brad_Booth_Media.Tide_Buoy.premium.yearly.storekit",
-      "type" : "NonConsumable"
-    },
-    {
       "displayPrice" : "1.00",
       "familyShareable" : false,
       "internalID" : "7E0B54B1",
@@ -129,7 +113,47 @@
     ]
   },
   "subscriptionGroups" : [
+    {
+      "id" : "4F9C9D6A",
+      "localizations" : [
+        {
+          "description" : "Yearly premium access for surf data, map spots, and future tides.",
+          "displayName" : "Tide Buoy Premium",
+          "locale" : "en_US"
+        }
+      ],
+      "name" : "Tide Buoy Premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
 
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "3.00",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "44ECB148",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlocks premium features: surf buoy data, map spot picker, saved spots, and future tide lookahead.",
+              "displayName" : "Tide Buoy Premium (Yearly)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "Brad_Booth_Media.Tide_Buoy.premium.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Brad_Booth_Media.Tide_Buoy.premium.yearly.storekit",
+          "subscriptionGroupID" : "4F9C9D6A",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
   ],
   "version" : {
     "major" : 4,

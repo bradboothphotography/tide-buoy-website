@@ -4,6 +4,11 @@
 <dict>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-6342044419043640~8787733920</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Tide Buoy uses your location to show nearby tide stations and buoy readings.</string>
 	<key>NSUserTrackingUsageDescription</key>
