@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-6342044419043640~8787733920</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Tide Buoy uses your location to show nearby tide stations and buoy readings.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier may be used to deliver more relevant ads.</string>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+.DS_Store
+build/
+DerivedData/
+*.xcuserstate
+*.xccheckout
+*.moved-aside
+*.swp
+*.tmp
+*.log
+
+# Xcode user-specific data
+**/xcuserdata/
+
+# Local design exports (not app runtime assets)
+layout for tide buoy.png
+layout for tide buoy].ai

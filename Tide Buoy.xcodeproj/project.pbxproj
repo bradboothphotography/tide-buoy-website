@@ -6,6 +6,20 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1A1C29402F5B69DC00EEBD1B /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 1A1C293F2F5B69DC00EEBD1B /* GoogleMobileAds */; };
+		1AEE8DD92F5B526C0090F6B4 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 1AEE8DD72F5B526C0090F6B4 /* Configuration.storekit */; };
+		1AEE8DDA2F5B526C0090F6B4 /* C6CAD636.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AEE8DD52F5B526C0090F6B4 /* C6CAD636.png */; };
+		B26E54FE2E3DC8210060CE0F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26E54FC2E3DC5EB0060CE0F /* HomeView.swift */; };
+		B26E54FF2E4069F70060CE0F /* TideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26E54F52E3DC4AD0060CE0F /* TideViewModel.swift */; };
+		B26E55002E406A200060CE0F /* mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26E54F62E3DC4C00060CE0F /* mode.swift */; };
+		B26E55012E406A270060CE0F /* TidePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26E54FA2E3DC5420060CE0F /* TidePoint.swift */; };
+		B26E55022E406A2A0060CE0F /* OceanConditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26E54F82E3DC4F10060CE0F /* OceanConditions.swift */; };
+		B26E55042E43DE4B0060CE0F /* TideCurveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26E55032E43DE3D0060CE0F /* TideCurveView.swift */; };
+		B2F100282E4A5C4F0046C842 /* TideDayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F100272E4A5C440046C842 /* TideDayListView.swift */; };
+		B2F1002C2E4A5E3B0046C842 /* APICache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F1002B2E4A5E390046C842 /* APICache.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B26E54D32E3DC3CB0060CE0F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,9 +38,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1AEE8DD42F59FFC70090F6B4 /* Brad_Booth_Media.Tide_Buoy.premium.lifetime.storekit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Brad_Booth_Media.Tide_Buoy.premium.lifetime.storekit.storekit; sourceTree = "<group>"; };
+		1AEE8DD52F5B526C0090F6B4 /* C6CAD636.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C6CAD636.png; sourceTree = "<group>"; };
+		1AEE8DD72F5B526C0090F6B4 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		B26E54C42E3DC3C90060CE0F /* Tide Buoy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tide Buoy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26E54D22E3DC3CB0060CE0F /* Tide BuoyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tide BuoyTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26E54DC2E3DC3CB0060CE0F /* Tide BuoyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tide BuoyUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B26E54F52E3DC4AD0060CE0F /* TideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TideViewModel.swift; sourceTree = "<group>"; };
+		B26E54F62E3DC4C00060CE0F /* mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mode.swift; sourceTree = "<group>"; };
+		B26E54F82E3DC4F10060CE0F /* OceanConditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OceanConditions.swift; sourceTree = "<group>"; };
+		B26E54FA2E3DC5420060CE0F /* TidePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidePoint.swift; sourceTree = "<group>"; };
+		B26E54FC2E3DC5EB0060CE0F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		B26E55032E43DE3D0060CE0F /* TideCurveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TideCurveView.swift; sourceTree = "<group>"; };
+		B2F100272E4A5C440046C842 /* TideDayListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TideDayListView.swift; sourceTree = "<group>"; };
+		B2F1002B2E4A5E390046C842 /* APICache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A1C29402F5B69DC00EEBD1B /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,9 +98,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AEE8DD62F5B526C0090F6B4 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				1AEE8DD52F5B526C0090F6B4 /* C6CAD636.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		1AEE8DD82F5B526C0090F6B4 /* Brad_Booth_Media.Tide_Buoy.premium.lifetime.storekit.storekit */ = {
+			isa = PBXGroup;
+			children = (
+				1AEE8DD62F5B526C0090F6B4 /* Assets */,
+				1AEE8DD72F5B526C0090F6B4 /* Configuration.storekit */,
+			);
+			path = Brad_Booth_Media.Tide_Buoy.premium.lifetime.storekit.storekit;
+			sourceTree = "<group>";
+		};
 		B26E54BB2E3DC3C90060CE0F = {
 			isa = PBXGroup;
 			children = (
+				1AEE8DD82F5B526C0090F6B4 /* Brad_Booth_Media.Tide_Buoy.premium.lifetime.storekit.storekit */,
+				1AEE8DD42F59FFC70090F6B4 /* Brad_Booth_Media.Tide_Buoy.premium.lifetime.storekit.storekit */,
+				B26E54F32E3DC4090060CE0F /* Supporting */,
+				B26E54F22E3DC4000060CE0F /* Networking */,
+				B26E54F12E3DC3FA0060CE0F /* Views */,
+				B26E54F02E3DC3F30060CE0F /* ViewModels */,
+				B26E54EF2E3DC3EC0060CE0F /* Models */,
 				B26E54C62E3DC3C90060CE0F /* Tide Buoy */,
 				B26E54D52E3DC3CB0060CE0F /* Tide BuoyTests */,
 				B26E54DF2E3DC3CB0060CE0F /* Tide BuoyUITests */,
@@ -90,6 +140,49 @@
 				B26E54DC2E3DC3CB0060CE0F /* Tide BuoyUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B26E54EF2E3DC3EC0060CE0F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B2F1002B2E4A5E390046C842 /* APICache.swift */,
+				B26E54FA2E3DC5420060CE0F /* TidePoint.swift */,
+				B26E54F82E3DC4F10060CE0F /* OceanConditions.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B26E54F02E3DC3F30060CE0F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B26E54F52E3DC4AD0060CE0F /* TideViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B26E54F12E3DC3FA0060CE0F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B26E55032E43DE3D0060CE0F /* TideCurveView.swift */,
+				B2F100272E4A5C440046C842 /* TideDayListView.swift */,
+				B26E54FC2E3DC5EB0060CE0F /* HomeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B26E54F22E3DC4000060CE0F /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		B26E54F32E3DC4090060CE0F /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				B26E54F62E3DC4C00060CE0F /* mode.swift */,
+			);
+			path = Supporting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +205,7 @@
 			);
 			name = "Tide Buoy";
 			packageProductDependencies = (
+				1A1C293F2F5B69DC00EEBD1B /* GoogleMobileAds */,
 			);
 			productName = "Tide Buoy";
 			productReference = B26E54C42E3DC3C90060CE0F /* Tide Buoy.app */;
@@ -169,7 +263,7 @@
 		B26E54BC2E3DC3C90060CE0F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
+				BuildIndependentTargetsInParallel = NO;
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
@@ -195,6 +289,9 @@
 			);
 			mainGroup = B26E54BB2E3DC3C90060CE0F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1A1C293E2F5B69DC00EEBD1B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B26E54C52E3DC3C90060CE0F /* Products */;
 			projectDirPath = "";
@@ -212,6 +309,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AEE8DD92F5B526C0090F6B4 /* Configuration.storekit in Resources */,
+				1AEE8DDA2F5B526C0090F6B4 /* C6CAD636.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +335,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B26E54FF2E4069F70060CE0F /* TideViewModel.swift in Sources */,
+				B2F1002C2E4A5E3B0046C842 /* APICache.swift in Sources */,
+				B2F100282E4A5C4F0046C842 /* TideDayListView.swift in Sources */,
+				B26E55022E406A2A0060CE0F /* OceanConditions.swift in Sources */,
+				B26E54FE2E3DC8210060CE0F /* HomeView.swift in Sources */,
+				B26E55002E406A200060CE0F /* mode.swift in Sources */,
+				B26E55042E43DE4B0060CE0F /* TideCurveView.swift in Sources */,
+				B26E55012E406A270060CE0F /* TidePoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +432,8 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -379,6 +488,8 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -388,11 +499,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Tide Buoy/Tide_Buoy.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LQPD387NY4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Tide-Buoy-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Tide Buoy";
+				INFOPLIST_KEY_GADApplicationIdentifier = "ca-app-pub-6342044419043640~8787733920";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Tide Buoy uses your location to show nearby tide stations and buoy readings.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier may be used to deliver more relevant ads.";
+				INFOPLIST_KEY_UIAppFonts = "Fonts/Calder-LC.ttf";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -401,8 +519,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -412,10 +530,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Debug;
@@ -425,11 +544,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Tide Buoy/Tide_Buoy.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LQPD387NY4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Tide-Buoy-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Tide Buoy";
+				INFOPLIST_KEY_GADApplicationIdentifier = "ca-app-pub-6342044419043640~8787733920";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Tide Buoy uses your location to show nearby tide stations and buoy readings.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier may be used to deliver more relevant ads.";
+				INFOPLIST_KEY_UIAppFonts = "Fonts/Calder-LC.ttf";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -438,8 +564,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -449,10 +575,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Release;
@@ -470,10 +597,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Brad-Booth-Media.Tide-BuoyTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tide Buoy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tide Buoy";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -492,10 +620,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Brad-Booth-Media.Tide-BuoyTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tide Buoy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tide Buoy";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -513,10 +642,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Brad-Booth-Media.Tide-BuoyUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Tide Buoy";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -534,10 +664,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Brad-Booth-Media.Tide-BuoyUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Tide Buoy";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -583,6 +714,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1A1C293E2F5B69DC00EEBD1B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1A1C293F2F5B69DC00EEBD1B /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1A1C293E2F5B69DC00EEBD1B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B26E54BC2E3DC3C90060CE0F /* Project object */;
 }

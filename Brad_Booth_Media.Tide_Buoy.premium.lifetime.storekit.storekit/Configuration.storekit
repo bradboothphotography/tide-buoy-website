@@ -1,0 +1,138 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "3A166863",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "3.00",
+      "familyShareable" : false,
+      "internalID" : "44ECB148",
+      "localizations" : [
+        {
+          "description" : "Yearly premium access for surf data, map spots, and future tides.",
+          "displayName" : "Tide Buoy Premium (Yearly)",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "Brad_Booth_Media.Tide_Buoy.premium.yearly",
+      "promotionalImageID" : "C6CAD636",
+      "referenceName" : "Brad_Booth_Media.Tide_Buoy.premium.yearly.storekit",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "1.00",
+      "familyShareable" : false,
+      "internalID" : "7E0B54B1",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "Tip Jar",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "Brad_Booth_Media.Tide_Buoy.tip.1",
+      "referenceName" : "Brad_Booth_Media.Tide_Buoy.tip.1.storekit",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "5.00",
+      "familyShareable" : false,
+      "internalID" : "A1A7D2F4",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "Supporter Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "Brad_Booth_Media.Tide_Buoy.tip.5",
+      "referenceName" : "Brad_Booth_Media.Tide_Buoy.tip.5.storekit",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "10.00",
+      "familyShareable" : false,
+      "internalID" : "3C6F9E25",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "Legend Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "Brad_Booth_Media.Tide_Buoy.tip.10",
+      "referenceName" : "Brad_Booth_Media.Tide_Buoy.tip.10.storekit",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
