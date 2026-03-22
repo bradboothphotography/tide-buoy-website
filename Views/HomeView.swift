@@ -1,6 +1,11 @@
 import SwiftUI
 import MapKit
 
+private enum TideBuoyLegalLinks {
+    static let privacyPolicy = URL(string: "https://github.com/bradboothphotography/tide-buoy/blob/main/PRIVACY_POLICY.md")!
+    static let termsOfUse = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+}
+
 struct HomeView: View {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var viewModel = TideViewModel()
@@ -1014,6 +1019,26 @@ private struct PremiumInfoSheet: View {
                     }
                 }
 
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("SUBSCRIPTION")
+                        .font(.custom("Calder-LC", size: 18))
+                        .foregroundColor(Color(red: 0.137, green: 0.267, blue: 0.408))
+                    Text("TIDE BUOY PREMIUM • 1 YEAR")
+                        .font(.custom("Calder-LC", size: 17))
+                        .foregroundColor(.black.opacity(0.86))
+                    Text("\(premiumManager.displayPrice) PER YEAR • AUTO-RENEWS UNTIL CANCELED")
+                        .font(.custom("Calder-LC", size: 16))
+                        .foregroundColor(.black.opacity(0.76))
+                    HStack(spacing: 14) {
+                        Link("PRIVACY POLICY", destination: TideBuoyLegalLinks.privacyPolicy)
+                            .font(.custom("Calder-LC", size: 16))
+                        Link("TERMS OF USE", destination: TideBuoyLegalLinks.termsOfUse)
+                            .font(.custom("Calder-LC", size: 16))
+                    }
+                    .foregroundColor(Color(red: 0.137, green: 0.267, blue: 0.408))
+                }
+                .padding(.top, 2)
+
                 Spacer()
                 if premiumManager.isPremiumUnlocked {
                     Text("PREMIUM ACTIVE")
@@ -1135,6 +1160,15 @@ private struct AboutTideBuoySheet: View {
                             .font(.custom("Calder-LC", size: 15))
                             .foregroundColor(.secondary)
                     }
+
+                    HStack(spacing: 14) {
+                        Link("PRIVACY POLICY", destination: TideBuoyLegalLinks.privacyPolicy)
+                            .font(.custom("Calder-LC", size: 15))
+                        Link("TERMS OF USE", destination: TideBuoyLegalLinks.termsOfUse)
+                            .font(.custom("Calder-LC", size: 15))
+                    }
+                    .foregroundColor(Color(red: 0.137, green: 0.267, blue: 0.408))
+                    .padding(.top, 2)
 
                     Text("THANK YOU FOR SUPPORTING TIDE BUOY.")
                         .font(.custom("Calder-LC", size: 16))

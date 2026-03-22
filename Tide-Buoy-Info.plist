@@ -11,8 +11,6 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Tide Buoy uses your location to show nearby tide stations and buoy readings.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>This identifier may be used to deliver more relevant ads.</string>
 	<key>UIRequiresFullScreen</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>
