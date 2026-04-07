@@ -519,6 +519,10 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     private let minRefreshDistanceM: CLLocationDistance = 1000
     private let minRefreshIntervalS: TimeInterval = 120
     private var forceLocationOnNextFix = false
+    private let locateButtonMaxAccuracyM: CLLocationAccuracy = 50000
+    private let passiveLocationMaxAccuracyM: CLLocationAccuracy = 25000
+    private let locateButtonMaxAgeS: TimeInterval = 900
+    private let passiveLocationMaxAgeS: TimeInterval = 180
     private let minOffshoreBuoyDistanceM: CLLocationDistance = 5000
     private let maxRelevantBuoyDistanceM: CLLocationDistance = 250000
     private let maxExpandedBuoyDistanceM: CLLocationDistance = 900000
@@ -599,15 +603,32 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     }
 
     func useCurrentLocation() {
+        let status: CLAuthorizationStatus
+        if #available(iOS 14.0, *) {
+            status = locationManager.authorizationStatus
+        } else {
+            status = CLLocationManager.authorizationStatus()
+        }
+
+        if status == .denied || status == .restricted {
+            DispatchQueue.main.async {
+                self.locationName = "LOCATION ACCESS OFF"
+            }
+            return
+        }
+
         forceLocationOnNextFix = true
         DispatchQueue.main.async {
             self.locationName = "LOCATING..."
         }
         if let current = locationManager.location,
            current.horizontalAccuracy >= 0,
-           current.horizontalAccuracy <= 5000,
-           abs(current.timestamp.timeIntervalSinceNow) <= 300 {
+           current.horizontalAccuracy <= locateButtonMaxAccuracyM,
+           abs(current.timestamp.timeIntervalSinceNow) <= locateButtonMaxAgeS {
             refreshAll(for: current.coordinate, force: true)
+        }
+        if status == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
         }
         locationManager.startUpdatingLocation()
         locationManager.requestLocation()
@@ -692,23 +713,36 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     }
 
     // MARK: - CLLocationManagerDelegate
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        handleAuthorizationChange(for: manager)
+    }
+
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
-            manager.startUpdatingLocation()
-            manager.requestLocation()
-        }
+        handleAuthorizationChange(for: manager)
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let loc = locations.last else { return }
         let fromLocateButton = forceLocationOnNextFix
+        let maxAccuracy = fromLocateButton ? locateButtonMaxAccuracyM : passiveLocationMaxAccuracyM
+        let maxAge = fromLocateButton ? locateButtonMaxAgeS : passiveLocationMaxAgeS
 
-        if fromLocateButton {
-            guard loc.horizontalAccuracy >= 0, loc.horizontalAccuracy <= 5000 else { return }
-            guard abs(loc.timestamp.timeIntervalSinceNow) <= 300 else { return }
-        } else {
-            guard loc.horizontalAccuracy >= 0, loc.horizontalAccuracy <= 2000 else { return }
-            guard abs(loc.timestamp.timeIntervalSinceNow) <= 30 else { return }
+        let now = Date()
+        let validLocations = locations.filter { loc in
+            guard loc.horizontalAccuracy >= 0 else { return false }
+            guard loc.horizontalAccuracy <= maxAccuracy else { return false }
+            return abs(loc.timestamp.timeIntervalSince(now)) <= maxAge
+        }
+
+        guard let loc = validLocations.min(by: { $0.horizontalAccuracy < $1.horizontalAccuracy }) else {
+            if fromLocateButton,
+               let fallback = manager.location,
+               fallback.horizontalAccuracy >= 0,
+               fallback.horizontalAccuracy <= locateButtonMaxAccuracyM,
+               abs(fallback.timestamp.timeIntervalSince(now)) <= locateButtonMaxAgeS {
+                forceLocationOnNextFix = false
+                refreshAll(for: fallback.coordinate, force: true)
+            }
+            return
         }
 
         let force = forceLocationOnNextFix || shouldForceRefresh(for: loc)
@@ -720,6 +754,35 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         #if DEBUG
         print("Location error:", error.localizedDescription)
         #endif
+        if forceLocationOnNextFix {
+            forceLocationOnNextFix = false
+            DispatchQueue.main.async {
+                self.locationName = "LOCATION UNAVAILABLE"
+            }
+        }
+    }
+
+    private func handleAuthorizationChange(for manager: CLLocationManager) {
+        let status: CLAuthorizationStatus
+        if #available(iOS 14.0, *) {
+            status = manager.authorizationStatus
+        } else {
+            status = CLLocationManager.authorizationStatus()
+        }
+
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            manager.startUpdatingLocation()
+            manager.requestLocation()
+        case .denied, .restricted:
+            DispatchQueue.main.async {
+                self.locationName = "LOCATION ACCESS OFF"
+            }
+        case .notDetermined:
+            break
+        @unknown default:
+            break
+        }
     }
 
     private func shouldForceRefresh(for location: CLLocation) -> Bool {
