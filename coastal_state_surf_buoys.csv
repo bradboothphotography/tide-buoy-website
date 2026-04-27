@@ -1,0 +1,83 @@
+State,Buoy_ID,Buoy_Name,Location_Area,Primary_Surf_Buoy
+Maine,44007,Portland,"12 NM SE of Portland, ME",TRUE
+Maine,44027,Jonesport,"20 NM SE of Jonesport, ME",TRUE
+Maine,44030,B01 – Western Maine Shelf,Western Maine Shelf,FALSE
+Maine,44032,E01 – Central Maine Shelf,Central Maine Shelf,FALSE
+Maine,44034,I01 – Eastern Maine Shelf,Eastern Maine Shelf,FALSE
+New Hampshire,44098,Jeffrey’s Ledge,"Jeffrey’s Ledge, NH",TRUE
+Massachusetts,44008,Nantucket,"54 NM SE of Nantucket, MA",TRUE
+Massachusetts,44020,Nantucket Sound,Nantucket Sound,FALSE
+Massachusetts,44029,A01 – Massachusetts Bay,Massachusetts Bay,FALSE
+Massachusetts,44013,Boston,"16 NM E of Boston, MA",TRUE
+Massachusetts,44018,Cape Cod,"23 NM S of Block Island, RI / Cape Cod Buoy",FALSE
+Massachusetts,44090,Cape Cod Bay,"Cape Cod Bay, MA",FALSE
+Rhode Island,44097,Block Island,"Block Island, RI",TRUE
+Connecticut,44039,Central Long Island Sound,Central Long Island Sound,FALSE
+New York,44025,Long Island,"30 NM S of Islip, NY",TRUE
+New York,44065,New York Harbor Entrance,"15 NM SE of Breezy Point, NY",FALSE
+New Jersey,44091,Barnegat,"Barnegat, NJ",TRUE
+New Jersey,44009,Delaware Bay,"26 NM SE of Cape May, NJ",FALSE
+Delaware,44009,Delaware Bay,"26 NM SE of Cape May, NJ / Delaware Bay",TRUE
+Maryland,44042,Potomac,"Potomac, MD",FALSE
+Virginia,44014,Virginia Beach,"64 NM E of Virginia Beach, VA",TRUE
+Virginia,44072,York Spit,"York Spit, VA",FALSE
+Virginia,44088,Virginia Beach Offshore,"Offshore Virginia Beach, VA",FALSE
+Virginia,44099,Cape Henry,"Cape Henry, VA",FALSE
+North Carolina,41025,Diamond Shoals,"Diamond Shoals, NC",TRUE
+North Carolina,41013,Frying Pan Shoals,"Frying Pan Shoals, NC",TRUE
+North Carolina,41037,Wrightsville Beach Offshore,"Offshore Wrightsville Beach, NC",FALSE
+North Carolina,41064,Onslow Bay Outer,"Onslow Bay Outer, NC",FALSE
+North Carolina,44056,Duck FRF,"Duck Field Research Facility, NC",FALSE
+North Carolina,44095,Oregon Inlet,"Oregon Inlet, NC",FALSE
+North Carolina,44086,Nags Head,"Nags Head, NC",FALSE
+South Carolina,41004,Edisto,"41 NM SE of Charleston, SC",TRUE
+South Carolina,41029,Capers Nearshore,"Near Capers Island, SC",FALSE
+South Carolina,41033,Fripp Nearshore,"Fripp Island nearshore, SC",FALSE
+Georgia,41008,Grays Reef,"40 NM SE of Savannah, GA",TRUE
+Florida,41009,Canaveral,"20 NM E of Cape Canaveral, FL",TRUE
+Florida,41069,Ponce de Leon Inlet,"Off Ponce de Leon Inlet, FL",FALSE
+Florida,41070,Ponce de Leon Inlet Waves,"Waves at Ponce de Leon Inlet, FL",FALSE
+Florida,41068,Fort Pierce,"Fort Pierce, FL",FALSE
+Florida,41112,Offshore Fernandina Beach,"Offshore Fernandina Beach, FL",FALSE
+Florida,41113,Cape Canaveral Nearshore,"Nearshore Cape Canaveral, FL",TRUE
+Florida,41117,St. Augustine,"St. Augustine, FL",TRUE
+Florida,41122,Hollywood Beach,"Hollywood Beach, FL",FALSE
+Florida,42036,West Tampa,"112 NM WNW of Tampa, FL",TRUE
+Florida,42099,Offshore St. Petersburg,"Offshore St. Petersburg, FL",TRUE
+Florida,42098,Egmont Channel Entrance,"Egmont Channel Entrance, FL",FALSE
+Florida,42095,Satan Shoal,"Satan Shoal, FL",TRUE
+Florida,42097,Pulley Ridge,"Pulley Ridge, FL",FALSE
+Florida,42023,C13 – WFS South Buoy,"50m isobath, West Florida Shelf",FALSE
+Alabama,42012,Orange Beach,"44 NM SE of Mobile, AL",TRUE
+Alabama,42040,Luke Offshore Test Platform,"63 NM S of Dauphin Island, AL",FALSE
+Mississippi,42040,Luke Offshore Test Platform,"63 NM S of Dauphin Island, AL (serves MS coast)",FALSE
+Louisiana,42001,Mid Gulf,"180 NM S of Southwest Pass, LA",TRUE
+Louisiana,42007,East Gulf (Louisiana coast),Gulf buoy serving Louisiana coast,FALSE
+Texas,42019,Freeport,"60 NM SSE of Freeport, TX",TRUE
+Texas,42035,Galveston,"30 NM SE of Galveston, TX",TRUE
+Texas,42002,Western Gulf,"275 NM E of Brownsville, TX",FALSE
+Texas,42017,Matagorda,Matagorda Bay / West Texas Gulf,FALSE
+California,46011,Santa Maria,"21 NM NW of Point Arguello, CA",TRUE
+California,46025,Santa Monica Basin,"33 NM WSW of Santa Monica, CA",TRUE
+California,46028,Cape San Martin,"55 NM WNW of Morro Bay, CA",FALSE
+California,46047,Tanner Bank,"121 NM W of San Diego, CA",FALSE
+California,46053,East Santa Barbara,"12 NM SW of Santa Barbara, CA",FALSE
+California,46054,West Santa Barbara,"38 NM W of Santa Barbara, CA",FALSE
+California,46069,South Santa Rosa,"14 NM SW of Santa Rosa Island, CA",FALSE
+California,46086,San Clemente Basin,"27 NM SE of San Clemente Island, CA",FALSE
+California,46026,San Francisco,"18 NM W of San Francisco, CA",TRUE
+California,46027,St Georges,"8 NM NW of Crescent City, CA",FALSE
+California,46022,Eel River,"17 NM WSW of Eureka, CA",FALSE
+Oregon,46002,West Oregon,"275 NM W of Coos Bay, OR",TRUE
+Oregon,46015,Port Orford,"15 NM W of Port Orford, OR",FALSE
+Oregon,46050,Stonewall Bank,"20 NM W of Newport, OR",FALSE
+Oregon,46089,Tillamook,"85 NM WNW of Tillamook, OR",FALSE
+Washington,46041,Cape Elizabeth,"45 NM NW of Aberdeen, WA",TRUE
+Washington,46087,Neah Bay,"6 NM N of Cape Flattery, WA",FALSE
+Washington,46088,New Dungeness,"17 NM NE of Port Angeles, WA",FALSE
+Alaska,46082,Cape Suckling,"35 NM SE of Kayak Island, AK",TRUE
+Alaska,46083,Cape Edgecumbe,"Cape Edgecumbe, AK",FALSE
+Hawaii,51001,NW Hawaii,"NW of Kauai, Hawaii",TRUE
+Hawaii,51002,SW Hawaii,"SW of Honolulu, Hawaii",FALSE
+Hawaii,51004,Kaneohe Bay,"Off Oahu, HI",FALSE
+Hawaii,51101,South Point,"South of Big Island, HI",FALSE

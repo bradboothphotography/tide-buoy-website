@@ -249,6 +249,14 @@ struct NDBCStation: Decodable, Hashable {
     let type: String? // "buoy"/"tower"/etc.
 }
 
+private struct StateSurfBuoy: Hashable {
+    let state: String
+    let stationID: String
+    let name: String
+    let locationArea: String
+    let isPrimary: Bool
+}
+
 struct NDBCObs: Codable {
     let timestamp: String?
     let wind_dir: Double?
@@ -564,6 +572,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     private let inlandSnapToCoastDistanceM: CLLocationDistance = 32187
     private var currentCoord: CLLocationCoordinate2D?
     private var currentCoordShouldBePreserved = false
+    private var currentStateName: String? = "Florida"
     private var currentTideStationID: String?
     private var forcedCoastalDisplayName: String?
     private var requestedCurveStart: Date = Calendar.current.startOfDay(for: Date())
@@ -577,6 +586,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     private var latestTideEvents: [TideEvent] = []
     private var latestFishingWindMS: Double?
     private var latestFishingWindDisplay: String?
+    private lazy var coastalStateSurfBuoys: [StateSurfBuoy] = Self.loadCoastalStateSurfBuoys()
     private var surfBuoyRegion: SurfBuoyRegion {
         guard let coord = currentCoord else { return .other }
         let lat = coord.latitude
@@ -702,6 +712,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
 
     func setManualLocation(latitude: Double, longitude: Double, label: String? = nil) {
         let coord = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        currentStateName = label.flatMap { Self.stateName(fromLocationDisplay: $0) }
         if let label {
             DispatchQueue.main.async {
                 self.locationName = label.uppercased()
@@ -1072,8 +1083,12 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     private func reverseGeocode(_ coord: CLLocationCoordinate2D) {
         CLGeocoder().reverseGeocodeLocation(.init(latitude: coord.latitude, longitude: coord.longitude)) { [weak self] placemarks, _ in
             guard let self = self else { return }
+            let stateName = placemarks?.first
+                .flatMap { Self.fullStateName(for: $0.administrativeArea) ?? $0.administrativeArea }
+
             if let forced = self.forcedCoastalDisplayName {
                 DispatchQueue.main.async {
+                    self.updateCurrentStateName(stateName, coord: coord)
                     self.locationName = forced
                 }
                 return
@@ -1084,14 +1099,29 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                 let display = [city, state].compactMap { $0 }.joined(separator: ", ").uppercased()
                 if self.isOpenWaterDisplayName(display) {
                     DispatchQueue.main.async {
+                        self.updateCurrentStateName(stateName, coord: coord)
                         if self.forcedCoastalDisplayName == nil {
                             self.locationName = "CUSTOM SPOT"
                         }
                     }
                     return
                 }
-                DispatchQueue.main.async { self.locationName = display }
+                DispatchQueue.main.async {
+                    self.updateCurrentStateName(stateName, coord: coord)
+                    self.locationName = display
+                }
             }
+        }
+    }
+
+    private func updateCurrentStateName(_ stateName: String?, coord: CLLocationCoordinate2D) {
+        let normalized = stateName?.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard normalized?.isEmpty == false else { return }
+        let previous = currentStateName
+        currentStateName = normalized
+
+        if previous != normalized, isPremiumUnlocked {
+            refreshBuoys(for: coord)
         }
     }
 
@@ -1919,17 +1949,21 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     // MARK: - Buoys (nearest two) — used by Surf panel
 
     func refreshBuoys(for coord: CLLocationCoordinate2D) {
-        fetchNearestNDBCStations(to: coord, count: 300) { [weak self] stations in
+        fetchNearestNDBCStations(to: coord, count: 1000) { [weak self] stations in
             guard let self = self else { return }
-            let region = self.surfBuoyRegion
-            let stations = self.mergedPreferredStations(into: stations, region: region)
-            guard !stations.isEmpty else {
+            let stateRows = self.coastalSurfBuoyRowsForCurrentState()
+            let stateRowsByID = Dictionary(uniqueKeysWithValues: stateRows.map { ($0.stationID.uppercased(), $0) })
+            let stateStations = stateRowsByID.isEmpty
+                ? stations
+                : stations.filter { stateRowsByID[$0.id.uppercased()] != nil }
+
+            guard !stateStations.isEmpty else {
                 self.latestFishingWindMS = nil
                 self.latestFishingWindDisplay = nil
                 self.refreshFishingModel()
                 DispatchQueue.main.async {
                     self.buoySummaries = self.isPremiumUnlocked
-                        ? ["NO SWELL BUOY DATA FOUND IN SEARCH RADIUS"]
+                        ? ["NO STATE SWELL BUOY DATA FOUND"]
                         : ["UNLOCK PREMIUM TO VIEW SURF & BUOY DATA"]
                     self.buoyCards = []
                 }
@@ -1937,11 +1971,11 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             }
 
             // Use the robust latest_obs.txt parser (more consistent than per-station JSON)
-            self.fetchLatestObs(for: stations) { lines in
-                let paired = Array(zip(stations, lines))
+            let primaryIDs = Set(stateRows.filter(\.isPrimary).map { $0.stationID.uppercased() })
+            self.fetchLatestObs(for: stateStations, fallbackStationIDs: primaryIDs) { lines in
+                let paired = Array(zip(stateStations, lines))
                 let withData = paired.filter { !$0.1.uppercased().contains("NO RECENT OBSERVATIONS") }
-                let preferredIDs = Set(self.preferredBuoyIDs(for: region))
-                let preferred = paired.filter { preferredIDs.contains($0.0.id.uppercased()) }
+                let primary = paired.filter { primaryIDs.contains($0.0.id.uppercased()) }
                 let waveCapable = withData.filter {
                     let upper = $0.1.uppercased()
                     return upper.contains("SWELL HEIGHT:") ||
@@ -1949,30 +1983,24 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                            upper.contains("SWELL DIRECTION:")
                 }
 
-                let buoyCandidates = self.uniqueBuoyPairs(preferred + waveCapable)
+                let buoyCandidates = stateRowsByID.isEmpty
+                    ? self.uniqueBuoyPairs(waveCapable)
+                    : self.uniqueBuoyPairs(primary + waveCapable)
                 func distanceM(_ station: NDBCStation) -> CLLocationDistance {
                     CLLocation(latitude: station.lat, longitude: station.lon)
                         .distance(from: CLLocation(latitude: coord.latitude, longitude: coord.longitude))
                 }
 
-                let offshoreWave = buoyCandidates.filter {
-                    self.isPreferredBuoy($0.0, region: region) ||
-                    self.isOffshoreCandidate($0.0, distanceM: distanceM($0.0))
-                }
-                let coastFacingWave = offshoreWave.filter {
-                    self.isStationFacingRegion($0.0, region: region)
-                }
-                let candidateWave = coastFacingWave
-
-                let rankedWave = candidateWave.sorted { lhs, rhs in
-                    let lhsDistance = CLLocation(latitude: lhs.0.lat, longitude: lhs.0.lon)
-                        .distance(from: CLLocation(latitude: coord.latitude, longitude: coord.longitude))
-                    let rhsDistance = CLLocation(latitude: rhs.0.lat, longitude: rhs.0.lon)
-                        .distance(from: CLLocation(latitude: coord.latitude, longitude: coord.longitude))
-                    let lhsPriority = self.priorityRank(for: lhs.0, region: region)
-                    let rhsPriority = self.priorityRank(for: rhs.0, region: region)
-                    if lhsPriority != rhsPriority {
-                        return lhsPriority < rhsPriority
+                let rankedWave = buoyCandidates.sorted { lhs, rhs in
+                    let lhsDistance = distanceM(lhs.0)
+                    let rhsDistance = distanceM(rhs.0)
+                    if abs(lhsDistance - rhsDistance) > 100 {
+                        return lhsDistance < rhsDistance
+                    }
+                    let lhsPrimary = stateRowsByID[lhs.0.id.uppercased()]?.isPrimary == true
+                    let rhsPrimary = stateRowsByID[rhs.0.id.uppercased()]?.isPrimary == true
+                    if lhsPrimary != rhsPrimary {
+                        return lhsPrimary
                     }
                     return lhsDistance < rhsDistance
                 }
@@ -1992,11 +2020,13 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                 }
 
                 let cards: [BuoyCard] = selected.map { station, line in
-                    let parsed = self.parseBuoyLineForCard(raw: line, fallbackTitle: station.name ?? station.id)
+                    let metadata = stateRowsByID[station.id.uppercased()]
+                    let displayName = metadata?.name ?? station.name ?? station.id
+                    let parsed = self.parseBuoyLineForCard(raw: line, fallbackTitle: displayName)
                     return BuoyCard(
                         id: station.id.lowercased(),
                         stationID: station.id.uppercased(),
-                        title: (station.name ?? parsed.title).uppercased(),
+                        title: displayName.uppercased(),
                         details: parsed.details,
                         latitude: station.lat,
                         longitude: station.lon
@@ -2034,6 +2064,103 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         }
     }
 
+    private func coastalSurfBuoyRowsForCurrentState() -> [StateSurfBuoy] {
+        let stateName = currentStateName ?? Self.stateName(fromLocationDisplay: locationName)
+        guard let stateName else { return [] }
+
+        return coastalStateSurfBuoys.filter {
+            $0.state.caseInsensitiveCompare(stateName) == .orderedSame
+        }
+    }
+
+    private static func loadCoastalStateSurfBuoys() -> [StateSurfBuoy] {
+        guard let url = Bundle.main.url(forResource: "coastal_state_surf_buoys", withExtension: "csv"),
+              let text = try? String(contentsOf: url, encoding: .utf8) else {
+            return []
+        }
+
+        return text
+            .split(whereSeparator: \.isNewline)
+            .dropFirst()
+            .compactMap { rawLine -> StateSurfBuoy? in
+                let columns = parseCSVLine(String(rawLine))
+                guard columns.count >= 5 else { return nil }
+                let state = columns[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                let stationID = columns[1].trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+                let name = columns[2].trimmingCharacters(in: .whitespacesAndNewlines)
+                let locationArea = columns[3].trimmingCharacters(in: .whitespacesAndNewlines)
+                let isPrimary = columns[4].trimmingCharacters(in: .whitespacesAndNewlines).uppercased() == "TRUE"
+
+                guard !state.isEmpty, !stationID.isEmpty, !name.isEmpty else { return nil }
+                return StateSurfBuoy(
+                    state: state,
+                    stationID: stationID,
+                    name: name,
+                    locationArea: locationArea,
+                    isPrimary: isPrimary
+                )
+            }
+    }
+
+    private static func parseCSVLine(_ line: String) -> [String] {
+        var columns: [String] = []
+        var current = ""
+        var isInsideQuotes = false
+        var index = line.startIndex
+
+        while index < line.endIndex {
+            let character = line[index]
+            if character == "\"" {
+                let next = line.index(after: index)
+                if isInsideQuotes, next < line.endIndex, line[next] == "\"" {
+                    current.append("\"")
+                    index = next
+                } else {
+                    isInsideQuotes.toggle()
+                }
+            } else if character == ",", !isInsideQuotes {
+                columns.append(current)
+                current.removeAll(keepingCapacity: true)
+            } else {
+                current.append(character)
+            }
+
+            index = line.index(after: index)
+        }
+
+        columns.append(current)
+        return columns
+    }
+
+    private static func stateName(fromLocationDisplay display: String?) -> String? {
+        guard let display else { return nil }
+        let cleaned = display
+            .replacingOccurrences(of: "\n", with: " ")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let abbreviation = cleaned.split(separator: ",").last?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(separator: " ")
+            .first
+            .map(String.init) else { return nil }
+
+        return fullStateName(for: abbreviation) ?? abbreviation
+    }
+
+    private static func fullStateName(for abbreviation: String?) -> String? {
+        guard let abbreviation else { return nil }
+        let key = abbreviation.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        let states = [
+            "AL": "Alabama", "AK": "Alaska", "CA": "California", "CT": "Connecticut",
+            "DE": "Delaware", "FL": "Florida", "GA": "Georgia", "HI": "Hawaii",
+            "LA": "Louisiana", "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts",
+            "MS": "Mississippi", "NH": "New Hampshire", "NJ": "New Jersey",
+            "NY": "New York", "NC": "North Carolina", "OR": "Oregon",
+            "RI": "Rhode Island", "SC": "South Carolina", "TX": "Texas",
+            "VA": "Virginia", "WA": "Washington"
+        ]
+        return states[key] ?? (states.values.contains { $0.uppercased() == key } ? abbreviation : nil)
+    }
+
     private func parseBuoyLineForCard(raw: String, fallbackTitle: String) -> (title: String, details: [String]) {
         let pieces = raw
             .split(separator: "|")
@@ -2049,7 +2176,11 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     /// lines for the `stations` requested. This is the most reliable free feed for
     /// WVHT (wave height), DPD (dominant period), MWD (wave direction), WSPD (wind),
     /// and WTMP (water temp). We match stations by their ID.
-    func fetchLatestObs(for stations: [NDBCStation], completion: @escaping ([String]) -> Void) {
+    func fetchLatestObs(
+        for stations: [NDBCStation],
+        fallbackStationIDs: Set<String> = [],
+        completion: @escaping ([String]) -> Void
+    ) {
         let wanted = Set(stations.map { $0.id.lowercased() })
         guard !wanted.isEmpty else { completion([]); return }
 
@@ -2107,64 +2238,177 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
 
                 let stid = toks[iSTN].lowercased()
                 guard wanted.contains(stid) else { continue }
-
-                func tok(_ i: Int) -> String { (i < toks.count) ? toks[i] : "MM" }
-
-                let wvhtM = tok(iWVHT)   // meters
-                let dpdS  = tok(iDPD)    // seconds
-                let mwd   = tok(iMWD)    // degrees
-                let wdir  = tok(iWDIR)   // degrees
-                let wspdM = tok(iWSPD)   // m/s
-                let wtmpC = tok(iWTMP)   // °C
-
-                var details: [String] = []
-
-                if let m = Double(wvhtM) {
-                    details.append("SWELL HEIGHT: \(self.formatTideHeight(m, decimals: 1, uppercaseUnit: true))")
-                }
-
-                if let s = Double(dpdS) {
-                    details.append(String(format: "SWELL PERIOD: %.0f SEC", s))
-                }
-
-                if let deg = Double(mwd) {
-                    details.append(String(format: "SWELL DIRECTION: %.0f°", deg))
-                }
-
-                let windDirectionText: String? = {
-                    guard let windDeg = Double(wdir) else { return nil }
-                    return self.degToCompass(windDeg)
-                }()
-                let windSpeedText: String? = {
-                    guard let ms = Double(wspdM) else { return nil }
-                    return self.formatWind(ms)
-                }()
-
-                switch (windDirectionText, windSpeedText) {
-                case let (dir?, speed?):
-                    details.append("WIND: \(dir) \(speed)")
-                case let (dir?, nil):
-                    details.append("WIND: \(dir)")
-                case let (nil, speed?):
-                    details.append("WIND: \(speed)")
-                case (nil, nil):
-                    details.append("WIND: N/A")
-                }
-
-                if let c = Double(wtmpC) {
-                    details.append("WATER TEMP: \(self.formatWaterTemp(c))")
-                }
-
-                let pretty = (stations.first(where: { $0.id.lowercased() == stid })?.name ?? stid.uppercased()).uppercased()
-                let lineOut = ([pretty] + details).joined(separator: "|")
-                outByStation[stid] = lineOut
+                guard let station = stations.first(where: { $0.id.lowercased() == stid }) else { continue }
+                outByStation[stid] = self.formattedBuoyLine(
+                    tokens: toks,
+                    station: station,
+                    iWVHT: iWVHT,
+                    iDPD: iDPD,
+                    iMWD: iMWD,
+                    iWDIR: iWDIR,
+                    iWSPD: iWSPD,
+                    iWTMP: iWTMP
+                )
             }
 
-            let ordered = stations.map { station in
-                outByStation[station.id.lowercased()] ?? "\((station.name ?? station.id).uppercased())|NO RECENT OBSERVATIONS"
+            let stationsNeedingFallback = stations.filter { station in
+                guard fallbackStationIDs.contains(station.id.uppercased()) else { return false }
+                let line = outByStation[station.id.lowercased()] ?? ""
+                return !line.uppercased().contains("SWELL HEIGHT:")
             }
-            completion(ordered)
+
+            guard !stationsNeedingFallback.isEmpty else {
+                let ordered = stations.map { station in
+                    outByStation[station.id.lowercased()] ?? "\((station.name ?? station.id).uppercased())|NO RECENT OBSERVATIONS"
+                }
+                completion(ordered)
+                return
+            }
+
+            let group = DispatchGroup()
+            let lock = NSLock()
+
+            for station in stationsNeedingFallback {
+                group.enter()
+                self.fetchRecentSwellLine(for: station) { fallbackLine in
+                    if let fallbackLine {
+                        lock.lock()
+                        outByStation[station.id.lowercased()] = fallbackLine
+                        lock.unlock()
+                    }
+                    group.leave()
+                }
+            }
+
+            group.notify(queue: .global(qos: .userInitiated)) {
+                let ordered = stations.map { station in
+                    outByStation[station.id.lowercased()] ?? "\((station.name ?? station.id).uppercased())|NO RECENT OBSERVATIONS"
+                }
+                completion(ordered)
+            }
         }.resume()
+    }
+
+    private func fetchRecentSwellLine(for station: NDBCStation, completion: @escaping (String?) -> Void) {
+        guard let url = URL(string: "https://www.ndbc.noaa.gov/data/realtime2/\(station.id.uppercased()).txt") else {
+            completion(nil)
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            guard error == nil, let data = data, let text = String(data: data, encoding: .utf8) else {
+                completion(nil)
+                return
+            }
+
+            let lines = text.split(whereSeparator: \.isNewline).map(String.init)
+            guard !lines.isEmpty else {
+                completion(nil)
+                return
+            }
+
+            var headerTokens: [String] = []
+            for line in lines where line.hasPrefix("#") {
+                let tokens = line.replacingOccurrences(of: "#", with: "")
+                    .split { $0.isWhitespace }
+                    .map(String.init)
+                if tokens.contains(where: { $0.uppercased() == "WVHT" }) {
+                    headerTokens = tokens
+                    break
+                }
+            }
+
+            func idx(_ key: String) -> Int? {
+                headerTokens.firstIndex { $0.uppercased() == key }
+            }
+
+            let iWDIR = idx("WDIR") ?? 5
+            let iWSPD = idx("WSPD") ?? 6
+            let iWVHT = idx("WVHT") ?? 8
+            let iDPD = idx("DPD") ?? 9
+            let iMWD = idx("MWD") ?? 11
+            let iWTMP = idx("WTMP") ?? 15
+
+            for line in lines where !line.hasPrefix("#") {
+                let tokens = line.split { $0.isWhitespace }.map(String.init)
+                guard tokens.count > iWVHT, Double(tokens[iWVHT]) != nil else { continue }
+
+                let lineOut = self.formattedBuoyLine(
+                    tokens: tokens,
+                    station: station,
+                    iWVHT: iWVHT,
+                    iDPD: iDPD,
+                    iMWD: iMWD,
+                    iWDIR: iWDIR,
+                    iWSPD: iWSPD,
+                    iWTMP: iWTMP
+                )
+                completion(lineOut)
+                return
+            }
+
+            completion(nil)
+        }.resume()
+    }
+
+    private func formattedBuoyLine(
+        tokens: [String],
+        station: NDBCStation,
+        iWVHT: Int,
+        iDPD: Int,
+        iMWD: Int,
+        iWDIR: Int,
+        iWSPD: Int,
+        iWTMP: Int
+    ) -> String {
+        func tok(_ i: Int) -> String { (i < tokens.count) ? tokens[i] : "MM" }
+
+        let wvhtM = tok(iWVHT)
+        let dpdS = tok(iDPD)
+        let mwd = tok(iMWD)
+        let wdir = tok(iWDIR)
+        let wspdM = tok(iWSPD)
+        let wtmpC = tok(iWTMP)
+
+        var details: [String] = []
+
+        if let m = Double(wvhtM) {
+            details.append("SWELL HEIGHT: \(formatTideHeight(m, decimals: 1, uppercaseUnit: true))")
+        }
+
+        if let s = Double(dpdS) {
+            details.append(String(format: "SWELL PERIOD: %.0f SEC", s))
+        }
+
+        if let deg = Double(mwd) {
+            details.append(String(format: "SWELL DIRECTION: %.0f°", deg))
+        }
+
+        let windDirectionText: String? = {
+            guard let windDeg = Double(wdir) else { return nil }
+            return degToCompass(windDeg)
+        }()
+        let windSpeedText: String? = {
+            guard let ms = Double(wspdM) else { return nil }
+            return formatWind(ms)
+        }()
+
+        switch (windDirectionText, windSpeedText) {
+        case let (dir?, speed?):
+            details.append("WIND: \(dir) \(speed)")
+        case let (dir?, nil):
+            details.append("WIND: \(dir)")
+        case let (nil, speed?):
+            details.append("WIND: \(speed)")
+        case (nil, nil):
+            details.append("WIND: N/A")
+        }
+
+        if let c = Double(wtmpC) {
+            details.append("WATER TEMP: \(formatWaterTemp(c))")
+        }
+
+        return ([(station.name ?? station.id).uppercased()] + details).joined(separator: "|")
     }
 
     private func formatBuoyLine(name: String, obs: NDBCObs?) -> String {
@@ -2292,6 +2536,10 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             }
             .sorted { $0.distance < $1.distance }
 
+        if count >= 500 {
+            return Array(ranked.prefix(max(1, count)).map(\.station))
+        }
+
         let expanded = ranked
             .filter { $0.distance <= maxExpandedBuoyDistanceM }
         if !expanded.isEmpty {
@@ -2328,7 +2576,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     private func preferredBuoyIDs(for region: SurfBuoyRegion) -> [String] {
         switch region {
         case .atlanticSouth:
-            return ["41009", "41010", "41013", "41025", "41001"]
+            return ["41009"]
         case .atlanticMidNorth:
             return ["44017", "44025", "44065", "44008", "44011"]
         case .gulf:
@@ -2378,11 +2626,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         switch region {
         case .atlanticSouth:
             return [
-                NDBCStation(id: "41009", lat: 28.508, lon: -80.185, name: "CANAVERAL 20 NM EAST OF CAPE CANAVERAL, FL", owner: "NDBC", type: "buoy"),
-                NDBCStation(id: "41010", lat: 28.878, lon: -78.467, name: "CANAVERAL EAST - 120NM EAST OF CAPE CANAVERAL", owner: "NDBC", type: "buoy"),
-                NDBCStation(id: "41013", lat: 33.441, lon: -77.764, name: "FRYING PAN SHOALS, NC", owner: "NDBC", type: "buoy"),
-                NDBCStation(id: "41025", lat: 35.026, lon: -75.38, name: "DIAMOND SHOALS, NC", owner: "NDBC", type: "buoy"),
-                NDBCStation(id: "41001", lat: 34.791, lon: -72.42, name: "EAST HATTERAS - 150 NM EAST OF CAPE HATTERAS", owner: "NDBC", type: "buoy")
+                NDBCStation(id: "41009", lat: 28.508, lon: -80.185, name: "CANAVERAL 20 NM EAST OF CAPE CANAVERAL, FL", owner: "NDBC", type: "buoy")
             ]
         case .atlanticMidNorth:
             return []

@@ -10,6 +10,7 @@
 		1A1C29402F5B69DC00EEBD1B /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 1A1C293F2F5B69DC00EEBD1B /* GoogleMobileAds */; };
 		1AEE8DD92F5B526C0090F6B4 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 1AEE8DD72F5B526C0090F6B4 /* Configuration.storekit */; };
 		1AEE8DDA2F5B526C0090F6B4 /* C6CAD636.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AEE8DD52F5B526C0090F6B4 /* C6CAD636.png */; };
+		1AF100012FA1E00100B00001 /* coastal_state_surf_buoys.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1AF100002FA1E00100B00001 /* coastal_state_surf_buoys.csv */; };
 		B26E54FE2E3DC8210060CE0F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26E54FC2E3DC5EB0060CE0F /* HomeView.swift */; };
 		B26E54FF2E4069F70060CE0F /* TideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26E54F52E3DC4AD0060CE0F /* TideViewModel.swift */; };
 		B26E55002E406A200060CE0F /* mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26E54F62E3DC4C00060CE0F /* mode.swift */; };
@@ -41,6 +42,7 @@
 		1AEE8DD42F59FFC70090F6B4 /* Brad_Booth_Media.Tide_Buoy.premium.lifetime.storekit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Brad_Booth_Media.Tide_Buoy.premium.lifetime.storekit.storekit; sourceTree = "<group>"; };
 		1AEE8DD52F5B526C0090F6B4 /* C6CAD636.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C6CAD636.png; sourceTree = "<group>"; };
 		1AEE8DD72F5B526C0090F6B4 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
+		1AF100002FA1E00100B00001 /* coastal_state_surf_buoys.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = coastal_state_surf_buoys.csv; sourceTree = "<group>"; };
 		B26E54C42E3DC3C90060CE0F /* Tide Buoy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tide Buoy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26E54D22E3DC3CB0060CE0F /* Tide BuoyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tide BuoyTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26E54DC2E3DC3CB0060CE0F /* Tide BuoyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tide BuoyUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +120,7 @@
 		B26E54BB2E3DC3C90060CE0F = {
 			isa = PBXGroup;
 			children = (
+				1AF100002FA1E00100B00001 /* coastal_state_surf_buoys.csv */,
 				1AEE8DD82F5B526C0090F6B4 /* Brad_Booth_Media.Tide_Buoy.premium.lifetime.storekit.storekit */,
 				1AEE8DD42F59FFC70090F6B4 /* Brad_Booth_Media.Tide_Buoy.premium.lifetime.storekit.storekit */,
 				B26E54F32E3DC4090060CE0F /* Supporting */,
@@ -338,6 +341,7 @@
 			files = (
 				1AEE8DD92F5B526C0090F6B4 /* Configuration.storekit in Resources */,
 				1AEE8DDA2F5B526C0090F6B4 /* C6CAD636.png in Resources */,
+				1AF100012FA1E00100B00001 /* coastal_state_surf_buoys.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
