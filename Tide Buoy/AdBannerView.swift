@@ -21,10 +21,14 @@ enum AdMobConfig {
 }
 
 struct AdBannerContainerView: View {
+    @ObservedObject private var adConsentManager = AdTrackingConsentManager.shared
+
     var body: some View {
         #if canImport(GoogleMobileAds)
-        AdMobBannerRepresentable(adUnitID: AdMobConfig.bannerAdUnitID)
-            .frame(height: 50)
+        if adConsentManager.canLoadAds {
+            AdMobBannerRepresentable(adUnitID: AdMobConfig.bannerAdUnitID)
+                .frame(height: 50)
+        }
         #else
         EmptyView()
         #endif

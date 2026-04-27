@@ -22,8 +22,8 @@ struct TideCurveView: View {
                         Rectangle()
                             .fill(Color.clear)
                             .contentShape(Rectangle())
-                            .highPriorityGesture(
-                                DragGesture(minimumDistance: 0)
+                            .gesture(
+                                DragGesture(minimumDistance: 8)
                                     .onChanged { drag in
                                         let normalized = (drag.location.x - chartFrame.minX) / chartFrame.width
                                         scrubXFrac = max(0, min(1, normalized))
@@ -31,8 +31,7 @@ struct TideCurveView: View {
                                     }
                                     .onEnded { _ in
                                         scrubXFrac = nil
-                                    },
-                                including: .gesture
+                                    }
                             )
 
                         Canvas { ctx, _ in
@@ -87,21 +86,30 @@ struct TideCurveView: View {
                         ForEach(markers) { marker in
                             let point = markerPosition(marker, in: chartFrame)
 
-                            ZStack {
-                                Circle()
-                                    .fill(Color.clear)
-                                    .frame(width: 28, height: 28)
+                            Button {
+                                scrubXFrac = nil
+                                selectedMarkerID = (selectedMarkerID == marker.id) ? nil : marker.id
+                            } label: {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.clear)
+                                        .frame(width: 28, height: 28)
 
-                                Circle()
-                                    .fill(Color.black)
-                                    .frame(width: 10, height: 10)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.black, lineWidth: 0.75)
-                                    )
+                                    Circle()
+                                        .fill(Color.black)
+                                        .frame(width: 10, height: 10)
+                                        .overlay(
+                                            Circle()
+                                                .stroke(Color.black, lineWidth: 0.75)
+                                        )
+                                }
                             }
                             .position(point)
-                            .allowsHitTesting(false)
+                            .buttonStyle(.plain)
+                            .accessibilityLabel("\(marker.type) tide")
+                            .accessibilityValue("\(marker.timeText), \(marker.heightText)")
+                            .accessibilityHint("Shows the tide event details.")
+                            .zIndex(selectedMarkerID == marker.id ? 2 : 1)
                         }
 
                         if let scrubXFrac,
@@ -111,6 +119,11 @@ struct TideCurveView: View {
                                 xFrac: scrubXFrac,
                                 in: chartFrame
                             )
+                        }
+
+                        if scrubXFrac == nil,
+                           let selectedMarker = markers.first(where: { $0.id == selectedMarkerID }) {
+                            tooltip(for: selectedMarker, in: chartFrame)
                         }
                     }
                 }

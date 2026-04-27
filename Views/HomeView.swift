@@ -2,8 +2,9 @@ import SwiftUI
 import MapKit
 
 private enum TideBuoyLegalLinks {
-    static let privacyPolicy = URL(string: "https://github.com/bradboothphotography/tide-buoy/blob/main/PRIVACY_POLICY.md")!
+    static let privacyPolicy = URL(string: "https://bradboothmedia.com/tidebuoy-support")!
     static let termsOfUse = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+    static let support = URL(string: "https://bradboothmedia.com/tidebuoy-support")!
 }
 
 struct HomeView: View {
@@ -54,7 +55,6 @@ struct HomeView: View {
                     premiumSection
                     footerSection
                 }
-                .padding(.bottom, 20)
             }
             .ignoresSafeArea(edges: .top)
             .scrollDisabled(selectedScrubXFrac != nil)
@@ -156,10 +156,11 @@ struct HomeView: View {
                         .frame(width: 30, height: 30)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel(showSideMenu ? "Close menu" : "Open menu")
             }
             .padding(.horizontal, 18)
-            .padding(.top, 56)
-            .padding(.bottom, 10)
+            .padding(.top, 90)
+            .padding(.bottom, 4)
         }
         .frame(maxWidth: .infinity)
         .frame(height: 156)
@@ -217,6 +218,7 @@ struct HomeView: View {
                         .padding(.top, 8)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Use current location")
                 .contextMenu {
                     Button("SAVE CURRENT SPOT") {
                         if premiumManager.isPremiumUnlocked {
@@ -245,15 +247,19 @@ struct HomeView: View {
                                 showChartDayPicker = false
                             }
                         } label: {
-                            Text(viewModel.chartDayLabel(offset: offset))
-                                .font(.custom("Calder-LC", size: 14))
-                                .foregroundColor(isSelected ? .white : brandBlue)
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 6)
-                                .background(
-                                    Capsule()
-                                        .fill(isSelected ? brandBlue : Color.white.opacity(0.6))
-                                )
+                            Capsule()
+                                .fill(isSelected ? brandBlue : Color.white.opacity(0.6))
+                                .frame(width: offset == 1 ? 104 : 68, height: 34)
+                                .overlay {
+                                    Text(viewModel.chartDayLabel(offset: offset))
+                                        .font(.custom("Calder-LC", size: offset == 1 ? 12 : 14))
+                                        .foregroundColor(isSelected ? .white : brandBlue)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.72)
+                                        .allowsTightening(true)
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                        .offset(y: -1)
+                                }
                         }
                         .buttonStyle(.plain)
                     }
@@ -317,15 +323,16 @@ struct HomeView: View {
                 activeSheet = .premium
             }
         } label: {
-            Text("CHECK FUTURE TIDES")
-                .font(.custom("Calder-LC", size: 20))
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 12)
-                .background(
-                    Capsule()
-                        .fill(brandBlue)
-                )
+            Capsule()
+                .fill(brandBlue)
+                .frame(height: 52)
+                .overlay {
+                    Text("CHECK FUTURE TIDES")
+                        .font(.custom("Calder-LC", size: 20))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                        .offset(y: 1)
+                }
         }
         .buttonStyle(.plain)
         .padding(.horizontal, 20)
@@ -374,39 +381,10 @@ struct HomeView: View {
                     Text(viewModel.buoySummaries.first ?? "LOADING BUOY DATA...")
                         .font(.custom("Calder-LC", size: 18))
                         .foregroundColor(.black.opacity(0.7))
-                } else {
-                    ForEach(Array(viewModel.buoyCards.prefix(2).enumerated()), id: \.element.id) { index, card in
-                        Button {
-                            selectedBuoyForMap = card
-                        } label: {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(card.title)
-                                    .font(.custom("Calder-LC", size: 27))
-                                    .foregroundColor(.black)
-
-                                if card.details.isEmpty {
-                                    Text("NO RECENT OBSERVATIONS")
-                                        .font(.custom("Calder-LC", size: 16))
-                                        .foregroundColor(.black.opacity(0.8))
-                                } else {
-                                    ForEach(card.details, id: \.self) { detail in
-                                        Text(detail)
-                                            .font(.custom("Calder-LC", size: 16))
-                                            .foregroundColor(.black)
-                                    }
-                                }
-
-                                Text("TAP TO VIEW MAP LOCATION")
-                                    .font(.custom("Calder-LC", size: 13))
-                                    .foregroundColor(brandBlue.opacity(0.9))
-                            }
-                        }
-                        .buttonStyle(.plain)
-
-                        if index == 0 && viewModel.buoyCards.count > 1 {
-                            Spacer()
-                                .frame(height: 6)
-                        }
+                } else if let selectedBuoy = viewModel.selectedSurfBuoyCard {
+                    VStack(alignment: .leading, spacing: 12) {
+                        buoySelectionStrip
+                        buoyDetailCard(selectedBuoy)
                     }
                 }
             } else {
@@ -465,37 +443,108 @@ struct HomeView: View {
         .padding(.horizontal, 20)
     }
 
-    private var premiumSection: some View {
+    private var buoySelectionStrip: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(premiumManager.isPremiumUnlocked ? "PREMIUM ACTIVE" : "UPGRADE TO PREMIUM:")
-                .font(.custom("Calder-LC", size: 26))
-                .foregroundColor(.white)
+            Text("SELECT OCEAN BUOY")
+                .font(.custom("Calder-LC", size: 18))
+                .foregroundColor(brandBlue)
 
-            Text("YEARLY PREMIUM PLAN\nSURF DATA + SAVED SPOTS + MAP PICKER")
-                .font(.custom("Calder-LC", size: 17))
-                .foregroundColor(.white)
-                .lineSpacing(2)
-
-            ZStack {
-                Capsule()
-                    .fill(Color(red: 0.92, green: 0.92, blue: 0.92))
-                    .frame(height: 34)
-                Text(premiumManager.isPremiumUnlocked ? "ACTIVE" : "START \(premiumManager.displayPrice)")
-                    .font(.custom("Calder-LC", size: 19))
-                    .foregroundColor(.black)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(viewModel.buoyCards) { card in
+                        let isSelected = viewModel.selectedSurfBuoyCard?.stationID == card.stationID
+                        Button {
+                            viewModel.selectSurfBuoy(stationID: card.stationID)
+                        } label: {
+                            VStack(spacing: 2) {
+                                Text(card.title)
+                                    .font(.custom("Calder-LC", size: 15))
+                                    .lineLimit(2)
+                                    .multilineTextAlignment(.center)
+                                Text("BUOY \(card.stationID)")
+                                    .font(.custom("Calder-LC", size: 11))
+                            }
+                            .foregroundColor(isSelected ? .white : brandBlue)
+                            .frame(width: 128, height: 58)
+                            .padding(.horizontal, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(isSelected ? brandBlue : Color.gray.opacity(0.22))
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.horizontal, 2)
             }
-            .padding(.top, 4)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 18)
-        .padding(.vertical, 16)
-        .background(
-            RoundedRectangle(cornerRadius: 22)
-                .fill(brandBlue)
-        )
-        .padding(.horizontal, 20)
-        .onTapGesture {
-            if !premiumManager.isPremiumUnlocked {
+    }
+
+    private func buoyDetailCard(_ card: BuoyCard) -> some View {
+        Button {
+            selectedBuoyForMap = card
+        } label: {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(card.title)
+                    .font(.custom("Calder-LC", size: 27))
+                    .foregroundColor(.black)
+
+                Text("BUOY \(card.stationID)")
+                    .font(.custom("Calder-LC", size: 15))
+                    .foregroundColor(.black.opacity(0.78))
+
+                if card.details.isEmpty {
+                    Text("NO RECENT OBSERVATIONS")
+                        .font(.custom("Calder-LC", size: 16))
+                        .foregroundColor(.black.opacity(0.8))
+                } else {
+                    ForEach(card.details, id: \.self) { detail in
+                        Text(detail)
+                            .font(.custom("Calder-LC", size: 16))
+                            .foregroundColor(.black)
+                    }
+                }
+
+                Text("TAP TO VIEW MAP LOCATION")
+                    .font(.custom("Calder-LC", size: 13))
+                    .foregroundColor(brandBlue.opacity(0.9))
+            }
+        }
+        .buttonStyle(.plain)
+    }
+
+    @ViewBuilder
+    private var premiumSection: some View {
+        if !premiumManager.isPremiumUnlocked {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("UPGRADE TO PREMIUM:")
+                    .font(.custom("Calder-LC", size: 26))
+                    .foregroundColor(.white)
+
+                Text("YEARLY PREMIUM PLAN\nSURF DATA + SAVED SPOTS + MAP PICKER")
+                    .font(.custom("Calder-LC", size: 17))
+                    .foregroundColor(.white)
+                    .lineSpacing(2)
+
+                ZStack {
+                    Capsule()
+                        .fill(Color(red: 0.92, green: 0.92, blue: 0.92))
+                        .frame(height: 34)
+                    Text("START \(premiumManager.displayPrice)")
+                        .font(.custom("Calder-LC", size: 19))
+                        .foregroundColor(.black)
+                }
+                .padding(.top, 4)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 18)
+            .padding(.vertical, 16)
+            .background(
+                RoundedRectangle(cornerRadius: 22)
+                    .fill(brandBlue)
+            )
+            .padding(.horizontal, 20)
+            .onTapGesture {
                 activeSheet = .premium
             }
         }
@@ -513,13 +562,13 @@ struct HomeView: View {
             Image("LogoFooter")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 44)
-                .padding(.bottom, 2)
+                .frame(height: 38)
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 86)
+        .frame(height: 96)
         .padding(.top, 8)
         .padding(.horizontal, -20)
+        .background(brandBlue)
     }
 
     private var sideMenuOverlay: some View {
@@ -655,15 +704,16 @@ struct HomeView: View {
             }
             viewModel.setMode(mode)
         } label: {
-            Text(title)
-                .font(.custom("Calder-LC", size: 22))
-                .foregroundColor(viewModel.mode == mode ? .white : .white.opacity(0.9))
-                .frame(maxWidth: .infinity)
+            RoundedRectangle(cornerRadius: 18)
+                .fill(viewModel.mode == mode ? brandBlue : Color.gray.opacity(0.45))
                 .frame(height: 44)
-                .background(
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(viewModel.mode == mode ? brandBlue : Color.gray.opacity(0.45))
-                )
+                .overlay {
+                    Text(title)
+                        .font(.custom("Calder-LC", size: 22))
+                        .foregroundColor(viewModel.mode == mode ? .white : .white.opacity(0.9))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                        .offset(y: 1)
+                }
         }
         .buttonStyle(.plain)
     }
@@ -704,10 +754,10 @@ private struct MoonPhaseBadge: View {
     }
 
     var body: some View {
-        VStack(spacing: 3) {
+        VStack(spacing: 6) {
             ZStack {
                 Circle()
-                    .fill(Color.black.opacity(0.9))
+                    .fill(Color(red: 0.68, green: 0.68, blue: 0.68))
 
                 Circle()
                     .fill(Color.white)
@@ -720,10 +770,9 @@ private struct MoonPhaseBadge: View {
                     .clipShape(Circle())
 
                 Circle()
-                    .stroke(Color.black.opacity(0.28), lineWidth: 1)
+                    .stroke(Color.black.opacity(0.18), lineWidth: 1)
             }
             .frame(width: 54, height: 54)
-            .offset(y: 3)
 
             Text(phaseName)
                 .font(.custom("Calder-LC", size: 11))
@@ -904,8 +953,7 @@ private struct MapPickerSheet: View {
                         Button("USE THIS SPOT") {
                             viewModel.setManualLocation(
                                 latitude: center.latitude,
-                                longitude: center.longitude,
-                                label: "CUSTOM SPOT"
+                                longitude: center.longitude
                             )
                             dismiss()
                         }
@@ -998,9 +1046,7 @@ private struct PremiumInfoSheet: View {
         "UNLIMITED SAVED SPOTS",
         "MAP-BASED SPOT PICKER",
         "TAP BUOYS TO VIEW MAP LOCATION",
-        "7+ DAY FUTURE TIDE LOOKAHEAD",
-        "CUSTOM ALERTS (HIGH/LOW TIDE)",
-        "BUOY PRIORITY FILTERS"
+        "7+ DAY FUTURE TIDE LOOKAHEAD"
     ]
 
     var body: some View {
@@ -1036,6 +1082,11 @@ private struct PremiumInfoSheet: View {
                             .font(.custom("Calder-LC", size: 16))
                     }
                     .foregroundColor(Color(red: 0.137, green: 0.267, blue: 0.408))
+
+                    Text("PAYMENT IS CHARGED TO YOUR APPLE ID AT CONFIRMATION. THE SUBSCRIPTION RENEWS AUTOMATICALLY UNLESS CANCELED AT LEAST 24 HOURS BEFORE THE END OF THE CURRENT PERIOD. MANAGE OR CANCEL IN YOUR APP STORE ACCOUNT SETTINGS.")
+                        .font(.custom("Calder-LC", size: 13))
+                        .foregroundColor(.black.opacity(0.7))
+                        .lineSpacing(2)
                 }
                 .padding(.top, 2)
 
@@ -1165,6 +1216,8 @@ private struct AboutTideBuoySheet: View {
                         Link("PRIVACY POLICY", destination: TideBuoyLegalLinks.privacyPolicy)
                             .font(.custom("Calder-LC", size: 15))
                         Link("TERMS OF USE", destination: TideBuoyLegalLinks.termsOfUse)
+                            .font(.custom("Calder-LC", size: 15))
+                        Link("SUPPORT", destination: TideBuoyLegalLinks.support)
                             .font(.custom("Calder-LC", size: 15))
                     }
                     .foregroundColor(Color(red: 0.137, green: 0.267, blue: 0.408))

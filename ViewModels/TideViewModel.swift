@@ -1,7 +1,6 @@
 import Foundation
 import CoreLocation
 import SwiftUI
-import CryptoKit
 import StoreKit
 
 // MARK: - Small on-disk cache (Caches/ folder)
@@ -49,9 +48,33 @@ final class APITideCache {
     }
 
     private func path(for key: String) -> URL {
-        let digest = Insecure.MD5.hash(data: Data(key.utf8))
-        let hex = digest.map { String(format: "%02hhx", $0) }.joined()
-        return cacheDir.appendingPathComponent(hex + ".json")
+        let name = safeFilename(for: key)
+        return cacheDir.appendingPathComponent(name + ".json")
+    }
+
+    private func safeFilename(for key: String) -> String {
+        var encoded = Data(key.utf8)
+            .base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+
+        if encoded.count > 180 {
+            encoded = fnv1a64Hex(key) + "-" + String(encoded.prefix(120))
+        }
+
+        return encoded.isEmpty ? "cache-key" : encoded
+    }
+
+    private func fnv1a64Hex(_ string: String) -> String {
+        var hash: UInt64 = 0xcbf29ce484222325
+        for byte in string.utf8 {
+            hash ^= UInt64(byte)
+            hash &*= 0x100000001b3
+        }
+
+        let hex = String(hash, radix: 16)
+        return String(repeating: "0", count: max(0, 16 - hex.count)) + hex
     }
 }
 
@@ -205,6 +228,15 @@ enum WindSpeedUnit: String, CaseIterable, Codable, Identifiable {
         case .kph: return "KPH"
         }
     }
+}
+
+private enum SurfBuoyRegion {
+    case atlanticSouth
+    case atlanticMidNorth
+    case gulf
+    case westCoast
+    case hawaii
+    case other
 }
 
 // MARK: - NOAA NDBC stations & observations (current conditions)
@@ -510,6 +542,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     // Surf panel summaries for up to two nearby buoys
     @Published var buoySummaries: [String] = []
     @Published var buoyCards: [BuoyCard] = []
+    @Published var selectedSurfBuoyStationID: String?
 
     // Location
     private let locationManager = CLLocationManager()
@@ -528,20 +561,44 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     private let maxExpandedBuoyDistanceM: CLLocationDistance = 900000
     private let maxNOAATideStationDistanceM: CLLocationDistance = 250000
     private let maxNOAAFallbackStationDistanceM: CLLocationDistance = 120000
-    private let inlandSnapToCoastDistanceM: CLLocationDistance = 18000
+    private let inlandSnapToCoastDistanceM: CLLocationDistance = 32187
     private var currentCoord: CLLocationCoordinate2D?
+    private var currentCoordShouldBePreserved = false
     private var currentTideStationID: String?
     private var forcedCoastalDisplayName: String?
     private var requestedCurveStart: Date = Calendar.current.startOfDay(for: Date())
     private var requestedCurveEnd: Date = Calendar.current.date(byAdding: .day, value: 1, to: Calendar.current.startOfDay(for: Date()))!
     private var activeTideRequestID = UUID()
     private let savedSpotsKey = "tide-buoy.saved-spots.v1"
+    private let selectedSurfBuoyStationIDKey = "tide-buoy.selected-surf-buoy-station-id.v1"
     private let temperatureUnitKey = "tide-buoy.units.temperature.v1"
     private let tideHeightUnitKey = "tide-buoy.units.tide-height.v1"
     private let windSpeedUnitKey = "tide-buoy.units.wind-speed.v1"
     private var latestTideEvents: [TideEvent] = []
     private var latestFishingWindMS: Double?
     private var latestFishingWindDisplay: String?
+    private var surfBuoyRegion: SurfBuoyRegion {
+        guard let coord = currentCoord else { return .other }
+        let lat = coord.latitude
+        let lon = coord.longitude
+
+        if lat >= 18, lat <= 24, lon <= -150 {
+            return .hawaii
+        }
+        if lon <= -114 {
+            return .westCoast
+        }
+        if lat >= 24, lat <= 36, lon >= -82, lon <= -70 {
+            return .atlanticSouth
+        }
+        if lat >= 24, lat <= 32, lon >= -98, lon < -82 {
+            return .gulf
+        }
+        if lat > 36, lat <= 46, lon >= -82, lon <= -66 {
+            return .atlanticMidNorth
+        }
+        return .other
+    }
 
     private struct TideEvent {
         let date: Date
@@ -572,6 +629,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         locationManager.distanceFilter = 500
         loadUnitPreferences()
         loadSavedSpots()
+        selectedSurfBuoyStationID = UserDefaults.standard.string(forKey: selectedSurfBuoyStationIDKey)
 
         // seed UI with default while GPS resolves
         refreshAll(for: defaultCoord, force: true)
@@ -625,7 +683,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
            current.horizontalAccuracy >= 0,
            current.horizontalAccuracy <= locateButtonMaxAccuracyM,
            abs(current.timestamp.timeIntervalSinceNow) <= locateButtonMaxAgeS {
-            refreshAll(for: current.coordinate, force: true)
+            refreshAll(for: current.coordinate, force: true, preserveRequestedCoordinate: false)
         }
         if status == .notDetermined {
             locationManager.requestWhenInUseAuthorization()
@@ -649,7 +707,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                 self.locationName = label.uppercased()
             }
         }
-        refreshAll(for: coord, force: true)
+        refreshAll(for: coord, force: true, preserveRequestedCoordinate: false)
     }
 
     func initialMapCoordinate() -> CLLocationCoordinate2D {
@@ -679,6 +737,21 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
 
     func selectSavedSpot(_ spot: SavedSpot) {
         setManualLocation(latitude: spot.latitude, longitude: spot.longitude, label: spot.name)
+    }
+
+    func selectSurfBuoy(stationID: String) {
+        guard selectedSurfBuoyStationID != stationID else { return }
+        selectedSurfBuoyStationID = stationID
+        UserDefaults.standard.set(stationID, forKey: selectedSurfBuoyStationIDKey)
+    }
+
+    var selectedSurfBuoyCard: BuoyCard? {
+        guard !buoyCards.isEmpty else { return nil }
+        if let selectedSurfBuoyStationID,
+           let selected = buoyCards.first(where: { $0.stationID == selectedSurfBuoyStationID }) {
+            return selected
+        }
+        return buoyCards.first
     }
 
     func removeSavedSpot(_ spot: SavedSpot) {
@@ -740,14 +813,14 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                fallback.horizontalAccuracy <= locateButtonMaxAccuracyM,
                abs(fallback.timestamp.timeIntervalSince(now)) <= locateButtonMaxAgeS {
                 forceLocationOnNextFix = false
-                refreshAll(for: fallback.coordinate, force: true)
+                refreshAll(for: fallback.coordinate, force: true, preserveRequestedCoordinate: false)
             }
             return
         }
 
         let force = forceLocationOnNextFix || shouldForceRefresh(for: loc)
         forceLocationOnNextFix = false
-        refreshAll(for: loc.coordinate, force: force)
+        refreshAll(for: loc.coordinate, force: force, preserveRequestedCoordinate: false)
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -792,13 +865,19 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         return moved >= minRefreshDistanceM || elapsed >= minRefreshIntervalS
     }
 
-    private func refreshAll(for coord: CLLocationCoordinate2D, force: Bool) {
+    private func refreshAll(
+        for coord: CLLocationCoordinate2D,
+        force: Bool,
+        preserveRequestedCoordinate: Bool? = nil
+    ) {
         let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
         guard force || shouldForceRefresh(for: location) else { return }
 
+        let shouldPreserveCoordinate = preserveRequestedCoordinate ?? currentCoordShouldBePreserved
         lastRefreshLocation = location
         lastRefreshAt = Date()
         currentCoord = coord
+        currentCoordShouldBePreserved = shouldPreserveCoordinate
         currentTideStationID = nil
         forcedCoastalDisplayName = nil
 
@@ -887,9 +966,9 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         let total = max(0, min(100, 10 + tideMovementScore + tidalRangeScore + lunarScore + windScore))
         let rating: String
         switch total {
-        case 80...100: rating = "GREAT"
-        case 65..<80: rating = "GOOD"
-        case 45..<65: rating = "FAIR"
+        case 85...100: rating = "GREAT"
+        case 70..<85: rating = "GOOD"
+        case 45..<70: rating = "FAIR"
         default: rating = "POOR"
         }
 
@@ -1080,6 +1159,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         let start = cal.startOfDay(for: targetDate)
         let end = cal.date(byAdding: .day, value: 1, to: start)!
         let requestID = UUID()
+        let preserveRequestedCoordinate = currentCoordShouldBePreserved
         activeTideRequestID = requestID
         requestedCurveStart = start
         requestedCurveEnd = end
@@ -1092,7 +1172,13 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             self.updateCurrentXFrac()
         }
 
-        fetchNOAATides(for: coord, dayStart: start, dayEnd: end, requestID: requestID)
+        fetchNOAATides(
+            for: coord,
+            dayStart: start,
+            dayEnd: end,
+            requestID: requestID,
+            preserveRequestedCoordinate: preserveRequestedCoordinate
+        )
     }
 
     private func updateCurrentXFrac() {
@@ -1198,7 +1284,13 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     }
 
     // MARK: - NOAA tides (cached 1h)
-    private func fetchNOAATides(for coord: CLLocationCoordinate2D, dayStart: Date, dayEnd: Date, requestID: UUID) {
+    private func fetchNOAATides(
+        for coord: CLLocationCoordinate2D,
+        dayStart: Date,
+        dayEnd: Date,
+        requestID: UUID,
+        preserveRequestedCoordinate: Bool
+    ) {
         let df = DateFormatter(); df.dateFormat = "yyyyMMdd"
         let fetchStart = Calendar.current.date(byAdding: .day, value: -1, to: dayStart) ?? dayStart
         let fetchEnd = Calendar.current.date(byAdding: .day, value: 1, to: dayEnd) ?? dayEnd
@@ -1221,11 +1313,13 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                 let requested = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
                 let nearestCoast = CLLocation(latitude: lat, longitude: lon)
                 let distanceToCoast = nearestCoast.distance(from: requested)
-                let shouldSnapToStation = distanceToCoast > self.inlandSnapToCoastDistanceM
+                let shouldSnapToStation = !preserveRequestedCoordinate && distanceToCoast > self.inlandSnapToCoastDistanceM
                 let currentDisplay = (self.locationName ?? "").uppercased()
-                let shouldUseCoastalLabel = shouldSnapToStation ||
+                let shouldUseCoastalLabel = !preserveRequestedCoordinate && (
+                    shouldSnapToStation ||
                     self.isOpenWaterDisplayName(currentDisplay) ||
                     currentDisplay.contains("CUSTOM SPOT")
+                )
                 let coastalLabel = self.coastalDisplayName(for: station)
 
                 if shouldSnapToStation {
@@ -1721,12 +1815,12 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         fetchNOAAStations { stations, isFallbackList in
             let here = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
             let closestPair = stations
-                .compactMap { station -> (NOAAStation, CLLocationDistance)? in
+                .compactMap { station -> (station: NOAAStation, distance: CLLocationDistance, rank: CLLocationDistance)? in
                     guard let lat = station.lat, let lon = station.lon else { return nil }
                     let distance = CLLocation(latitude: lat, longitude: lon).distance(from: here)
-                    return (station, distance)
+                    return (station, distance, distance + self.inshoreTideStationPenalty(for: station, distance: distance))
                 }
-                .sorted { $0.1 < $1.1 }
+                .sorted { $0.rank < $1.rank }
                 .first
 
             guard let closestPair else {
@@ -1735,13 +1829,21 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             }
 
             let maxDistance = isFallbackList ? self.maxNOAAFallbackStationDistanceM : self.maxNOAATideStationDistanceM
-            guard closestPair.1 <= maxDistance else {
+            guard closestPair.distance <= maxDistance else {
                 completion(nil)
                 return
             }
 
-            completion(closestPair.0)
+            completion(closestPair.station)
         }
+    }
+
+    private func inshoreTideStationPenalty(for station: NOAAStation, distance: CLLocationDistance) -> CLLocationDistance {
+        guard distance > 8000 else { return 0 }
+
+        let name = (station.name ?? "").lowercased()
+        let inshoreTokens = [" river", "fork", "creek", "slough", "canal"]
+        return inshoreTokens.contains { name.contains($0) } ? 80000 : 0
     }
 
     private func applyNoTideCoverageState() {
@@ -1817,8 +1919,10 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     // MARK: - Buoys (nearest two) — used by Surf panel
 
     func refreshBuoys(for coord: CLLocationCoordinate2D) {
-        fetchNearestNDBCStations(to: coord, count: 160) { [weak self] stations in
+        fetchNearestNDBCStations(to: coord, count: 300) { [weak self] stations in
             guard let self = self else { return }
+            let region = self.surfBuoyRegion
+            let stations = self.mergedPreferredStations(into: stations, region: region)
             guard !stations.isEmpty else {
                 self.latestFishingWindMS = nil
                 self.latestFishingWindDisplay = nil
@@ -1836,35 +1940,43 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             self.fetchLatestObs(for: stations) { lines in
                 let paired = Array(zip(stations, lines))
                 let withData = paired.filter { !$0.1.uppercased().contains("NO RECENT OBSERVATIONS") }
+                let preferredIDs = Set(self.preferredBuoyIDs(for: region))
+                let preferred = paired.filter { preferredIDs.contains($0.0.id.uppercased()) }
                 let waveCapable = withData.filter {
                     let upper = $0.1.uppercased()
                     return upper.contains("SWELL HEIGHT:") ||
                            upper.contains("SWELL PERIOD:") ||
                            upper.contains("SWELL DIRECTION:")
                 }
+
+                let buoyCandidates = self.uniqueBuoyPairs(preferred + waveCapable)
                 func distanceM(_ station: NDBCStation) -> CLLocationDistance {
                     CLLocation(latitude: station.lat, longitude: station.lon)
                         .distance(from: CLLocation(latitude: coord.latitude, longitude: coord.longitude))
                 }
 
-                let localWave = waveCapable.filter { distanceM($0.0) <= self.maxRelevantBuoyDistanceM }
-                let expandedWave = waveCapable.filter { distanceM($0.0) <= self.maxExpandedBuoyDistanceM }
-                let candidateWave = localWave.isEmpty ? expandedWave : localWave
+                let offshoreWave = buoyCandidates.filter {
+                    self.isPreferredBuoy($0.0, region: region) ||
+                    self.isOffshoreCandidate($0.0, distanceM: distanceM($0.0))
+                }
+                let coastFacingWave = offshoreWave.filter {
+                    self.isStationFacingRegion($0.0, region: region)
+                }
+                let candidateWave = coastFacingWave
 
                 let rankedWave = candidateWave.sorted { lhs, rhs in
                     let lhsDistance = CLLocation(latitude: lhs.0.lat, longitude: lhs.0.lon)
                         .distance(from: CLLocation(latitude: coord.latitude, longitude: coord.longitude))
                     let rhsDistance = CLLocation(latitude: rhs.0.lat, longitude: rhs.0.lon)
                         .distance(from: CLLocation(latitude: coord.latitude, longitude: coord.longitude))
-                    let lhsOffshore = self.isOffshoreCandidate(lhs.0, distanceM: lhsDistance)
-                    let rhsOffshore = self.isOffshoreCandidate(rhs.0, distanceM: rhsDistance)
-
-                    if lhsOffshore != rhsOffshore {
-                        return lhsOffshore && !rhsOffshore
+                    let lhsPriority = self.priorityRank(for: lhs.0, region: region)
+                    let rhsPriority = self.priorityRank(for: rhs.0, region: region)
+                    if lhsPriority != rhsPriority {
+                        return lhsPriority < rhsPriority
                     }
                     return lhsDistance < rhsDistance
                 }
-                let selected = Array(rankedWave.prefix(2))
+                let selected = Array(rankedWave.prefix(8))
 
                 guard !selected.isEmpty else {
                     self.latestFishingWindMS = nil
@@ -1872,7 +1984,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                     self.refreshFishingModel()
                     DispatchQueue.main.async {
                         self.buoySummaries = self.isPremiumUnlocked
-                            ? ["NO SWELL BUOY DATA FOUND IN SEARCH RADIUS"]
+                            ? ["NO OCEAN SWELL BUOY DATA FOUND IN SEARCH RADIUS"]
                             : ["UNLOCK PREMIUM TO VIEW SURF & BUOY DATA"]
                         self.buoyCards = []
                     }
@@ -1884,7 +1996,7 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                     return BuoyCard(
                         id: station.id.lowercased(),
                         stationID: station.id.uppercased(),
-                        title: parsed.title,
+                        title: (station.name ?? parsed.title).uppercased(),
                         details: parsed.details,
                         latitude: station.lat,
                         longitude: station.lon
@@ -1903,7 +2015,16 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                 DispatchQueue.main.async {
                     if self.isPremiumUnlocked {
                         self.buoyCards = cards
-                        self.buoySummaries = cards.isEmpty ? ["NO RECENT SWELL BUOY OBSERVATIONS"] : cards.map { ([$0.title] + $0.details).joined(separator: "|") }
+                        if let selectedID = self.selectedSurfBuoyStationID,
+                           cards.contains(where: { $0.stationID == selectedID }) {
+                            self.selectedSurfBuoyStationID = selectedID
+                        } else {
+                            self.selectedSurfBuoyStationID = cards.first?.stationID
+                            if let first = cards.first?.stationID {
+                                UserDefaults.standard.set(first, forKey: self.selectedSurfBuoyStationIDKey)
+                            }
+                        }
+                        self.buoySummaries = cards.isEmpty ? ["NO RECENT SWELL BUOY OBSERVATIONS"] : cards.map { ([$0.title, "BUOY \($0.stationID)"] + $0.details).joined(separator: "|") }
                     } else {
                         self.buoyCards = []
                         self.buoySummaries = ["UNLOCK PREMIUM TO VIEW SURF & BUOY DATA"]
@@ -2194,6 +2315,104 @@ final class TideViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             return true
         }
         return distanceM >= minOffshoreBuoyDistanceM
+    }
+
+    private func priorityRank(for station: NDBCStation, region: SurfBuoyRegion) -> Int {
+        let preferredIDs = preferredBuoyIDs(for: region)
+        if let idx = preferredIDs.firstIndex(of: station.id.uppercased()) {
+            return idx
+        }
+        return preferredIDs.count + 1
+    }
+
+    private func preferredBuoyIDs(for region: SurfBuoyRegion) -> [String] {
+        switch region {
+        case .atlanticSouth:
+            return ["41009", "41010", "41013", "41025", "41001"]
+        case .atlanticMidNorth:
+            return ["44017", "44025", "44065", "44008", "44011"]
+        case .gulf:
+            return ["42001", "42002", "42039", "42040"]
+        case .westCoast:
+            return ["46026", "46013", "46011", "46029", "46059"]
+        case .hawaii:
+            return ["51001", "51002", "51003", "51004"]
+        case .other:
+            return []
+        }
+    }
+
+    private func isPreferredBuoy(_ station: NDBCStation, region: SurfBuoyRegion) -> Bool {
+        preferredBuoyIDs(for: region).contains(station.id.uppercased())
+    }
+
+    private func mergedPreferredStations(into stations: [NDBCStation], region: SurfBuoyRegion) -> [NDBCStation] {
+        var byID = Dictionary(uniqueKeysWithValues: stations.map { ($0.id.uppercased(), $0) })
+        for station in preferredNDBCStations(for: region) {
+            byID[station.id.uppercased()] = station
+        }
+
+        return byID.values.sorted { lhs, rhs in
+            let lhsPriority = priorityRank(for: lhs, region: region)
+            let rhsPriority = priorityRank(for: rhs, region: region)
+            if lhsPriority != rhsPriority {
+                return lhsPriority < rhsPriority
+            }
+            return lhs.id < rhs.id
+        }
+    }
+
+    private func uniqueBuoyPairs(_ pairs: [(NDBCStation, String)]) -> [(NDBCStation, String)] {
+        var seen = Set<String>()
+        var unique: [(NDBCStation, String)] = []
+        for pair in pairs {
+            let id = pair.0.id.uppercased()
+            guard !seen.contains(id) else { continue }
+            seen.insert(id)
+            unique.append(pair)
+        }
+        return unique
+    }
+
+    private func preferredNDBCStations(for region: SurfBuoyRegion) -> [NDBCStation] {
+        switch region {
+        case .atlanticSouth:
+            return [
+                NDBCStation(id: "41009", lat: 28.508, lon: -80.185, name: "CANAVERAL 20 NM EAST OF CAPE CANAVERAL, FL", owner: "NDBC", type: "buoy"),
+                NDBCStation(id: "41010", lat: 28.878, lon: -78.467, name: "CANAVERAL EAST - 120NM EAST OF CAPE CANAVERAL", owner: "NDBC", type: "buoy"),
+                NDBCStation(id: "41013", lat: 33.441, lon: -77.764, name: "FRYING PAN SHOALS, NC", owner: "NDBC", type: "buoy"),
+                NDBCStation(id: "41025", lat: 35.026, lon: -75.38, name: "DIAMOND SHOALS, NC", owner: "NDBC", type: "buoy"),
+                NDBCStation(id: "41001", lat: 34.791, lon: -72.42, name: "EAST HATTERAS - 150 NM EAST OF CAPE HATTERAS", owner: "NDBC", type: "buoy")
+            ]
+        case .atlanticMidNorth:
+            return []
+        case .gulf:
+            return []
+        case .westCoast:
+            return []
+        case .hawaii:
+            return []
+        case .other:
+            return []
+        }
+    }
+
+    private func isStationFacingRegion(_ station: NDBCStation, region: SurfBuoyRegion) -> Bool {
+        let id = station.id.uppercased()
+        switch region {
+        case .atlanticSouth:
+            return id.hasPrefix("410")
+        case .atlanticMidNorth:
+            return id.hasPrefix("440")
+        case .gulf:
+            return id.hasPrefix("420")
+        case .westCoast:
+            return id.hasPrefix("460")
+        case .hawaii:
+            return id.hasPrefix("510")
+        case .other:
+            return true
+        }
     }
 
     private func isStronglyInshore(_ station: NDBCStation) -> Bool {

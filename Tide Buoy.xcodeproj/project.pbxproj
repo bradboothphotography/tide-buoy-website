@@ -195,6 +195,7 @@
 				B26E54C02E3DC3C90060CE0F /* Sources */,
 				B26E54C12E3DC3C90060CE0F /* Frameworks */,
 				B26E54C22E3DC3C90060CE0F /* Resources */,
+				B2E600012FA1D20000A1BEEF /* Generate Google SDK dSYMs */,
 			);
 			buildRules = (
 			);
@@ -308,6 +309,27 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B2E600012FA1D20000A1BEEF /* Generate Google SDK dSYMs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Google SDK dSYMs";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${ACTION}\" = install ]; then\n  \"${PROJECT_DIR}/scripts/fix_google_sdk_archive_dsyms.sh\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B26E54C22E3DC3C90060CE0F /* Resources */ = {
@@ -508,7 +530,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = LQPD387NY4;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -556,7 +578,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = LQPD387NY4;
 				ENABLE_HARDENED_RUNTIME = YES;

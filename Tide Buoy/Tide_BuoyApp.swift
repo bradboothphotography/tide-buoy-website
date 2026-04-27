@@ -10,26 +10,11 @@ import CoreText
 #if canImport(UIKit)
 import UIKit
 #endif
-#if canImport(GoogleMobileAds)
-import GoogleMobileAds
-#endif
 
 @main
 struct Tide_BuoyApp: App {
     init() {
         Self.registerCalderFont()
-        #if canImport(GoogleMobileAds)
-        DispatchQueue.main.async {
-            let appID = (Bundle.main.object(forInfoDictionaryKey: "GADApplicationIdentifier") as? String)?.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard let appID, !appID.isEmpty else {
-                #if DEBUG
-                print("GADApplicationIdentifier missing. Skipping MobileAds start.")
-                #endif
-                return
-            }
-            MobileAds.shared.start(completionHandler: nil)
-        }
-        #endif
         #if DEBUG
         if UIFont(name: "Calder-LC", size: 18) == nil {
             print("Calder-LC font did not load.")
@@ -43,6 +28,9 @@ struct Tide_BuoyApp: App {
         WindowGroup {
             HomeView()
                 .preferredColorScheme(.light)
+                .task {
+                    AdTrackingConsentManager.shared.prepareAds()
+                }
         }
     }
 

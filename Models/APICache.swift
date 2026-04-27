@@ -1,5 +1,4 @@
 import Foundation
-import CryptoKit
 
 /// Very small disk cache for API responses.
 /// Stores raw Data with an expiry timestamp in the Caches directory.
@@ -65,10 +64,33 @@ final class APICache {
 
     // MARK: - Helpers
     private func path(for key: String) -> URL {
-        // Hash the key to a safe filename
-        let digest = Insecure.MD5.hash(data: Data(key.utf8))
-        let hex = digest.map { String(format: "%02hhx", $0) }.joined()
-        return cacheDir.appendingPathComponent(hex + ".json")
+        let name = safeFilename(for: key)
+        return cacheDir.appendingPathComponent(name + ".json")
+    }
+
+    private func safeFilename(for key: String) -> String {
+        var encoded = Data(key.utf8)
+            .base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+
+        if encoded.count > 180 {
+            encoded = fnv1a64Hex(key) + "-" + String(encoded.prefix(120))
+        }
+
+        return encoded.isEmpty ? "cache-key" : encoded
+    }
+
+    private func fnv1a64Hex(_ string: String) -> String {
+        var hash: UInt64 = 0xcbf29ce484222325
+        for byte in string.utf8 {
+            hash ^= UInt64(byte)
+            hash &*= 0x100000001b3
+        }
+
+        let hex = String(hash, radix: 16)
+        return String(repeating: "0", count: max(0, 16 - hex.count)) + hex
     }
 }//
 //  APICache.swift
@@ -76,4 +98,3 @@ final class APICache {
 //
 //  Created by Brad Booth on 8/11/25.
 //
-
