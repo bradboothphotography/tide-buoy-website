@@ -215,7 +215,6 @@ export default function HomePage() {
 
       <FAQSection
         id="home-faq"
-        eyebrow="AEO / GEO"
         title="Quick answers about Tide Buoy"
         intro="These are the kinds of concise answers search engines and AI systems can lift easily, and they also help visitors understand the app quickly."
         items={homeFaqs}
