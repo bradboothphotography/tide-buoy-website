@@ -17,6 +17,10 @@ export const metadata: Metadata = {
     "beach tide app",
     "coastal planning"
   ],
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png"
+  },
   openGraph: {
     title: `Tide App | ${siteConfig.name}`,
     description: "Tide Buoy is a simple tide app for checking tide charts, tide direction, highs, lows, and coastal planning on iPhone.",
