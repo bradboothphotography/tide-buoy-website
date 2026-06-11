@@ -5,7 +5,17 @@ import { siteConfig } from "@/data/siteConfig";
 
 export const metadata: Metadata = {
   title: `Simple Tide App | ${siteConfig.name}`,
-  description: "Learn how Tide Buoy works as a simple tide app for surfers, anglers, boaters, beachgoers, and photographers."
+  description: "Learn how Tide Buoy works as a simple tide app for surfers, anglers, boaters, beachgoers, and photographers.",
+  alternates: {
+    canonical: `${siteConfig.url}/app`
+  },
+  openGraph: {
+    title: `Simple Tide App | ${siteConfig.name}`,
+    description: "Learn how Tide Buoy works as a simple tide app for surfers, anglers, boaters, beachgoers, and photographers.",
+    url: `${siteConfig.url}/app`,
+    siteName: siteConfig.name,
+    type: "website"
+  }
 };
 
 export default function AppPage() {

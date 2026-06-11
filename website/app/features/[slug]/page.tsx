@@ -74,23 +74,6 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
             })
           }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: feature.faqs.map((faq) => ({
-                "@type": "Question",
-                name: faq.question,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: faq.answer
-                }
-              }))
-            })
-          }}
-        />
         <div className="grid gap-12 xl:grid-cols-[0.95fr_1.05fr] xl:items-start">
           <div className="xl:sticky xl:top-28">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--primary)]">{feature.kicker}</p>

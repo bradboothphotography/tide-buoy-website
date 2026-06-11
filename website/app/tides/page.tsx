@@ -5,7 +5,17 @@ import { tideGuideStates, tideGuideTopics } from "@/data/tidesContent";
 
 export const metadata: Metadata = {
   title: `Tide Guides | ${siteConfig.name}`,
-  description: "Browse starter Tide Buoy tide guide content for coastal planning, tide direction, and simple tide education."
+  description: "Browse starter Tide Buoy tide guide content for coastal planning, tide direction, and simple tide education.",
+  alternates: {
+    canonical: `${siteConfig.url}/tides`
+  },
+  openGraph: {
+    title: `Tide Guides | ${siteConfig.name}`,
+    description: "Browse starter Tide Buoy tide guide content for coastal planning, tide direction, and simple tide education.",
+    url: `${siteConfig.url}/tides`,
+    siteName: siteConfig.name,
+    type: "website"
+  }
 };
 
 export default function TidesPage() {

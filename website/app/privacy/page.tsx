@@ -1,8 +1,19 @@
 import type { Metadata } from "next";
+import { siteConfig } from "@/data/siteConfig";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Tide Buoy",
-  description: "Read the Tide Buoy privacy policy for location, advertising, diagnostics, subscriptions, and app data usage."
+  description: "Read the Tide Buoy privacy policy for location, advertising, diagnostics, subscriptions, and app data usage.",
+  alternates: {
+    canonical: `${siteConfig.url}/privacy`
+  },
+  openGraph: {
+    title: "Privacy Policy | Tide Buoy",
+    description: "Read the Tide Buoy privacy policy for location, advertising, diagnostics, subscriptions, and app data usage.",
+    url: `${siteConfig.url}/privacy`,
+    siteName: siteConfig.name,
+    type: "website"
+  }
 };
 
 export default function PrivacyPage() {
@@ -149,10 +160,10 @@ export default function PrivacyPage() {
             <p className="mt-4">For support or privacy questions, visit:</p>
             <p className="mt-2">
               <a
-                href="https://bradboothmedia.com/tidebuoy-support"
+                href="https://tidebuoy.com/contact"
                 className="font-semibold text-[var(--primary)]"
               >
-                https://bradboothmedia.com/tidebuoy-support
+                https://tidebuoy.com/contact
               </a>
             </p>
             <p className="mt-4">You can also contact us at:</p>
