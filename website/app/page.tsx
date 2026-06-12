@@ -59,9 +59,36 @@ export default function HomePage() {
       dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: siteConfig.name,
-            url: siteConfig.url
+            "@graph": [
+              {
+                "@type": "WebSite",
+                "@id": `${siteConfig.url}/#website`,
+                name: siteConfig.name,
+                url: siteConfig.url,
+                description: "A simple tide app website for tide charts, tide direction, tide timing, and coastal planning."
+              },
+              {
+                "@type": "Organization",
+                "@id": `${siteConfig.url}/#organization`,
+                name: siteConfig.name,
+                url: siteConfig.url,
+                logo: `${siteConfig.url}/images/brand/tide-buoy-logo-blue.png`
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": `${siteConfig.url}/#app`,
+                name: siteConfig.name,
+                applicationCategory: "WeatherApplication",
+                operatingSystem: "iOS",
+                url: siteConfig.appStoreUrl,
+                offers: {
+                  "@type": "Offer",
+                  price: "0",
+                  priceCurrency: "USD",
+                  description: "Tide Buoy is free to download. Premium is available for $3 per year."
+                }
+              }
+            ]
           })
         }}
       />
@@ -215,7 +242,6 @@ export default function HomePage() {
 
       <FAQSection
         id="home-faq"
-        eyebrow="AEO / GEO"
         title="Quick answers about Tide Buoy"
         intro="These are the kinds of concise answers search engines and AI systems can lift easily, and they also help visitors understand the app quickly."
         items={homeFaqs}

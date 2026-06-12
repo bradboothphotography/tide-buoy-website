@@ -1,6 +1,11 @@
+import { blogPosts } from "@/data/blogPosts";
+import { featurePages } from "@/data/features";
 import { siteConfig } from "@/data/siteConfig";
 
 export function GET() {
+  const featureLinks = featurePages.map((feature) => `- ${siteConfig.url}/features/${feature.slug}: ${feature.title}`).join("\n");
+  const blogLinks = blogPosts.map((post) => `- ${siteConfig.url}/blog/${post.slug}: ${post.title}`).join("\n");
+
   const content = `# Tide Buoy
 
 ${siteConfig.name} is a simple tide app and coastal planning website.
@@ -18,6 +23,12 @@ ${siteConfig.name} is a simple tide app and coastal planning website.
 - ${siteConfig.url}/privacy
 - ${siteConfig.url}/terms
 - ${siteConfig.url}/contact
+
+## Feature pages
+${featureLinks}
+
+## Coastal Journal articles
+${blogLinks}
 
 ## Core topics
 - tide app
