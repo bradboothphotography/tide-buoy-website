@@ -3,6 +3,15 @@ const SPREADSHEET_ID = "1zDX3CIPEmoioXYuJTs8y2keMjP_1iIwEfGZ1um6Q2Dw";
 const ALERT_EMAIL = "support@tidebuoy.com";
 
 function doPost(e) {
+  if (!e || !e.postData || !e.postData.contents) {
+    return ContentService.createTextOutput(
+      JSON.stringify({
+        ok: false,
+        message: "This script must be called by a POST request from the deployed web app URL."
+      })
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
+
   const data = JSON.parse(e.postData.contents);
   const sheet = getSupportSheet_();
 
@@ -39,6 +48,15 @@ function doPost(e) {
 
   return ContentService.createTextOutput(
     JSON.stringify({ ok: true })
+  ).setMimeType(ContentService.MimeType.JSON);
+}
+
+function doGet() {
+  return ContentService.createTextOutput(
+    JSON.stringify({
+      ok: true,
+      message: "Tide Buoy support webhook is live."
+    })
   ).setMimeType(ContentService.MimeType.JSON);
 }
 
