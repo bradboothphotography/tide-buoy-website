@@ -24,6 +24,25 @@ export default function BlogPage() {
   return (
     <section className="bg-[var(--surface)] py-20">
       <div className="container-shell">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Blog",
+              name: `Coastal Journal | ${siteConfig.name}`,
+              url: `${siteConfig.url}/blog`,
+              blogPost: blogPosts.map((post) => ({
+                "@type": "BlogPosting",
+                headline: post.title,
+                description: post.metaDescription,
+                datePublished: post.datePublished,
+                dateModified: post.dateModified,
+                url: `${siteConfig.url}/blog/${post.slug}`
+              }))
+            })
+          }}
+        />
         <div className="relative overflow-hidden rounded-[2.8rem] bg-[var(--primary-deep)] px-8 py-10 text-white md:px-12 md:py-14">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_32%),linear-gradient(135deg,rgba(0,38,69,0.18),transparent_55%)]" />
           <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80')", backgroundSize: "cover", backgroundPosition: "center" }} />

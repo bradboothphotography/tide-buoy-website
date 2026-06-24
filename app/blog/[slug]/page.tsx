@@ -77,9 +77,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Article",
+              "@type": "BlogPosting",
               headline: post.title,
               description: post.metaDescription,
+              datePublished: post.datePublished,
+              dateModified: post.dateModified,
               author: {
                 "@type": "Organization",
                 name: siteConfig.name
@@ -87,9 +89,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               publisher: {
                 "@type": "Organization",
                 name: siteConfig.name,
-                url: siteConfig.url
+                url: siteConfig.url,
+                logo: {
+                  "@type": "ImageObject",
+                  url: `${siteConfig.url}/images/brand/tide-buoy-logo-blue.png`
+                }
               },
-              mainEntityOfPage: `${siteConfig.url}/blog/${slug}`
+              mainEntityOfPage: {
+                "@type": "WebPage",
+                "@id": `${siteConfig.url}/blog/${slug}`
+              }
             })
           }}
         />
@@ -102,6 +111,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <span>{post.readTime}</span>
             <span className="h-1 w-1 rounded-full bg-[var(--primary)]" />
             <span>Coastal Journal</span>
+            <span className="h-1 w-1 rounded-full bg-[var(--primary)]" />
+            <time dateTime={post.dateModified}>Updated {new Date(`${post.dateModified}T00:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</time>
           </div>
           <p className="mx-auto mt-8 max-w-2xl text-xl leading-9 text-[var(--muted)]">{post.excerpt}</p>
         </header>

@@ -29,7 +29,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: feature.metaDescription,
       url: `${siteConfig.url}/features/${slug}`,
       siteName: siteConfig.name,
-      type: "article"
+      type: "article",
+      images: [
+        {
+          url: feature.screenshot,
+          width: 945,
+          height: 2048,
+          alt: `${feature.title} screenshot in Tide Buoy`
+        }
+      ]
     }
   };
 }
@@ -50,44 +58,50 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              itemListElement: [
+              "@graph": [
                 {
-                  "@type": "ListItem",
-                  position: 1,
-                  name: "Home",
-                  item: siteConfig.url
+                  "@type": "BreadcrumbList",
+                  itemListElement: [
+                    {
+                      "@type": "ListItem",
+                      position: 1,
+                      name: "Home",
+                      item: siteConfig.url
+                    },
+                    {
+                      "@type": "ListItem",
+                      position: 2,
+                      name: "Features",
+                      item: `${siteConfig.url}/features`
+                    },
+                    {
+                      "@type": "ListItem",
+                      position: 3,
+                      name: feature.title,
+                      item: `${siteConfig.url}/features/${slug}`
+                    }
+                  ]
                 },
                 {
-                  "@type": "ListItem",
-                  position: 2,
-                  name: "Features",
-                  item: `${siteConfig.url}/features`
-                },
-                {
-                  "@type": "ListItem",
-                  position: 3,
-                  name: feature.title,
-                  item: `${siteConfig.url}/features/${slug}`
+                  "@type": "WebPage",
+                  name: feature.metaTitle,
+                  description: feature.metaDescription,
+                  url: `${siteConfig.url}/features/${slug}`,
+                  isPartOf: {
+                    "@type": "WebSite",
+                    name: siteConfig.name,
+                    url: siteConfig.url
+                  },
+                  about: {
+                    "@type": "SoftwareApplication",
+                    name: siteConfig.name,
+                    applicationCategory: "WeatherApplication",
+                    operatingSystem: "iOS",
+                    url: siteConfig.appStoreUrl
+                  },
+                  primaryImageOfPage: `${siteConfig.url}${feature.screenshot}`
                 }
               ]
-            })
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: feature.faqs.map((faq) => ({
-                "@type": "Question",
-                name: faq.question,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: faq.answer
-                }
-              }))
             })
           }}
         />

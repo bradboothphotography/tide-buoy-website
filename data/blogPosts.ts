@@ -6,6 +6,8 @@ export type BlogPost = {
   excerpt: string;
   category: string;
   readTime: string;
+  datePublished: string;
+  dateModified: string;
   sections: {
     heading: string;
     paragraphs: string[];
@@ -21,6 +23,8 @@ export const blogPosts: BlogPost[] = [
     excerpt: "A simple guide to reading highs, lows, timing, and tide direction without the clutter.",
     category: "Tide Basics",
     readTime: "5 min read",
+    datePublished: "2026-05-01",
+    dateModified: "2026-06-11",
     sections: [
       {
         heading: "Start with the highs and lows",
@@ -53,6 +57,8 @@ export const blogPosts: BlogPost[] = [
     excerpt: "Tide direction changes how water moves through inlets, beaches, channels, and sandbars.",
     category: "Tide Basics",
     readTime: "4 min read",
+    datePublished: "2026-05-02",
+    dateModified: "2026-06-11",
     sections: [
       {
         heading: "Incoming tide",
@@ -85,6 +91,8 @@ export const blogPosts: BlogPost[] = [
     excerpt: "There is no single best tide for every surf spot, but there is a better way to think about it.",
     category: "Surf",
     readTime: "5 min read",
+    datePublished: "2026-05-03",
+    dateModified: "2026-06-11",
     sections: [
       {
         heading: "Every break responds differently",
@@ -117,6 +125,8 @@ export const blogPosts: BlogPost[] = [
     excerpt: "Fish often respond to moving water, and tide direction can shape feeding windows more than people realize.",
     category: "Fishing",
     readTime: "5 min read",
+    datePublished: "2026-05-04",
+    dateModified: "2026-06-11",
     sections: [
       {
         heading: "Moving water creates opportunity",
@@ -149,6 +159,8 @@ export const blogPosts: BlogPost[] = [
     excerpt: "Tide timing can change access, reflections, foreground texture, and how safe a beach photo mission feels.",
     category: "Photography",
     readTime: "4 min read",
+    datePublished: "2026-05-05",
+    dateModified: "2026-06-11",
     sections: [
       {
         heading: "Tide changes the beach itself",

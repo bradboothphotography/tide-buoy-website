@@ -3,15 +3,41 @@ import Link from "next/link";
 import { siteConfig } from "@/data/siteConfig";
 import { tideGuideStates, tideGuideTopics } from "@/data/tidesContent";
 
+const title = `Tide Guides | ${siteConfig.name}`;
+const description = "Browse starter Tide Buoy tide guide content for coastal planning, tide direction, and simple tide education.";
+
 export const metadata: Metadata = {
-  title: `Tide Guides | ${siteConfig.name}`,
-  description: "Browse starter Tide Buoy tide guide content for coastal planning, tide direction, and simple tide education."
+  title,
+  description,
+  alternates: {
+    canonical: `${siteConfig.url}/tides`
+  },
+  openGraph: {
+    title,
+    description,
+    url: `${siteConfig.url}/tides`,
+    siteName: siteConfig.name,
+    type: "website"
+  }
 };
 
 export default function TidesPage() {
   return (
     <section className="bg-[var(--surface)] py-20">
       <div className="container-shell">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CollectionPage",
+              name: "Tide guides",
+              description,
+              url: `${siteConfig.url}/tides`,
+              about: tideGuideTopics.map((topic) => topic.title)
+            })
+          }}
+        />
         <div className="max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--primary)]">Tide Guides</p>
           <h1 className="display-face mt-4 text-5xl font-bold text-[var(--primary-deep)] md:text-6xl">Simple Tide Planning Guides for Coastal Days</h1>

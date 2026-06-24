@@ -27,12 +27,21 @@ export const metadata: Metadata = {
     description: "Tide Buoy is a simple tide app for checking tide charts, tide direction, highs, lows, and coastal planning on iPhone.",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    type: "website"
+    type: "website",
+    images: [
+      {
+        url: "/images/brand/tide-buoy-logo-blue.png",
+        width: 1024,
+        height: 512,
+        alt: "Tide Buoy logo"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
     title: `Tide App | ${siteConfig.name}`,
-    description: "Tide Buoy is a simple tide app for checking tide charts, tide direction, highs, lows, and coastal planning on iPhone."
+    description: "Tide Buoy is a simple tide app for checking tide charts, tide direction, highs, lows, and coastal planning on iPhone.",
+    images: ["/images/brand/tide-buoy-logo-blue.png"]
   }
 };
 

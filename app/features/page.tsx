@@ -41,6 +41,22 @@ export default function FeaturesPage() {
   return (
     <section className="bg-[var(--surface)] py-20">
       <div className="container-shell">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              name: "Tide Buoy feature pages",
+              itemListElement: featurePages.map((feature, index) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                name: feature.title,
+                url: `${siteConfig.url}/features/${feature.slug}`
+              }))
+            })
+          }}
+        />
         <div className="max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--primary)]">Features</p>
           <h1 className="display-face mt-4 text-5xl font-bold text-[var(--primary-deep)] md:text-6xl">

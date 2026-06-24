@@ -5,13 +5,52 @@ import { siteConfig } from "@/data/siteConfig";
 
 export const metadata: Metadata = {
   title: `Simple Tide App | ${siteConfig.name}`,
-  description: "Learn how Tide Buoy works as a simple tide app for surfers, anglers, boaters, beachgoers, and photographers."
+  description: "Learn how Tide Buoy works as a simple tide app for surfers, anglers, boaters, beachgoers, and photographers.",
+  alternates: {
+    canonical: `${siteConfig.url}/app`
+  },
+  openGraph: {
+    title: `Simple Tide App | ${siteConfig.name}`,
+    description: "Learn how Tide Buoy works as a simple tide app for surfers, anglers, boaters, beachgoers, and photographers.",
+    url: `${siteConfig.url}/app`,
+    siteName: siteConfig.name,
+    type: "website"
+  }
 };
 
 export default function AppPage() {
   return (
     <section className="bg-[var(--surface)] py-20">
       <div className="container-shell">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: siteConfig.name,
+              applicationCategory: "WeatherApplication",
+              operatingSystem: "iOS",
+              url: siteConfig.appStoreUrl,
+              description:
+                "Tide Buoy is a simple iPhone tide app for local tide charts, tide direction, saved spots, surf buoy data, fishing data, and future tides.",
+              offers: [
+                {
+                  "@type": "Offer",
+                  price: "0",
+                  priceCurrency: "USD",
+                  description: "Free version with one ad banner."
+                },
+                {
+                  "@type": "Offer",
+                  price: "3",
+                  priceCurrency: "USD",
+                  description: "Premium version for $3 per year."
+                }
+              ]
+            })
+          }}
+        />
         <div className="max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--primary)]">The App</p>
           <h1 className="display-face mt-4 text-5xl font-bold text-[var(--primary-deep)] md:text-6xl">A Simple Tide App for Real Days on the Water</h1>

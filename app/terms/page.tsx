@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { siteConfig } from "@/data/siteConfig";
 
 export const metadata: Metadata = {
   title: "Terms of Use | Tide Buoy",
-  description: "View the Tide Buoy Terms of Use through Apple’s standard Licensed Application End User License Agreement."
+  description: "View the Tide Buoy Terms of Use through Apple’s standard Licensed Application End User License Agreement.",
+  alternates: {
+    canonical: `${siteConfig.url}/terms`
+  },
+  openGraph: {
+    title: "Terms of Use | Tide Buoy",
+    description: "View the Tide Buoy Terms of Use through Apple’s standard Licensed Application End User License Agreement.",
+    url: `${siteConfig.url}/terms`,
+    siteName: siteConfig.name,
+    type: "website"
+  }
 };
 
 export default function TermsPage() {

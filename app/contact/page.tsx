@@ -4,7 +4,17 @@ import { SupportForm } from "@/components/SupportForm";
 
 export const metadata: Metadata = {
   title: `Contact & Support | ${siteConfig.name}`,
-  description: "Get help with Tide Buoy, send support tickets, report bugs, or ask questions about the iPhone app."
+  description: "Get help with Tide Buoy, send support tickets, report bugs, or ask questions about the iPhone app.",
+  alternates: {
+    canonical: `${siteConfig.url}/contact`
+  },
+  openGraph: {
+    title: `Contact & Support | ${siteConfig.name}`,
+    description: "Get help with Tide Buoy, send support tickets, report bugs, or ask questions about the iPhone app.",
+    url: `${siteConfig.url}/contact`,
+    siteName: siteConfig.name,
+    type: "website"
+  }
 };
 
 export default function ContactPage() {
