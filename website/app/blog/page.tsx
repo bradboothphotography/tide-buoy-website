@@ -20,23 +20,6 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   const [featuredPost, ...otherPosts] = blogPosts;
-  const journalShortcuts = [
-    {
-      label: "Tide basics",
-      href: "/blog/how-to-read-a-tide-chart",
-      description: "How to read a tide chart"
-    },
-    {
-      label: "Surf timing",
-      href: "/blog/best-tide-for-surfing",
-      description: "Best tide for surfing"
-    },
-    {
-      label: "Fishing windows",
-      href: "/blog/best-tide-for-fishing",
-      description: "Best tide for fishing"
-    }
-  ];
 
   return (
     <section className="bg-[var(--surface)] py-20">
@@ -55,8 +38,7 @@ export default function BlogPage() {
                 description: post.metaDescription,
                 datePublished: post.datePublished,
                 dateModified: post.dateModified,
-                url: `${siteConfig.url}/blog/${post.slug}`,
-                image: post.heroImage ? `${siteConfig.url}${post.heroImage.src}` : undefined
+                url: `${siteConfig.url}/blog/${post.slug}`
               }))
             })
           }}
@@ -77,15 +59,10 @@ export default function BlogPage() {
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
-              {journalShortcuts.map((shortcut) => (
-                <Link
-                  key={shortcut.label}
-                  href={shortcut.href}
-                  className="rounded-[1.6rem] border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-sm transition duration-200 hover:-translate-y-0.5 hover:bg-white/15 hover:border-white/25"
-                  aria-label={`Open ${shortcut.description}`}
-                >
-                  <p className="text-sm font-semibold uppercase tracking-[0.14em] text-white/70">{shortcut.label}</p>
-                </Link>
+              {["Tide basics", "Surf timing", "Fishing windows"].map((tag) => (
+                <div key={tag} className="rounded-[1.6rem] border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-sm">
+                  <p className="text-sm font-semibold uppercase tracking-[0.14em] text-white/70">{tag}</p>
+                </div>
               ))}
             </div>
           </div>
@@ -94,14 +71,7 @@ export default function BlogPage() {
         <div className="mt-14 grid gap-8 xl:grid-cols-[1.2fr_0.8fr]">
           <article className="card-shadow overflow-hidden rounded-[2.6rem] border border-[var(--outline)] bg-white">
             <div className="relative min-h-[320px] overflow-hidden bg-[var(--surface-soft)] px-8 py-8 md:px-10 md:py-10">
-              <div
-                className="absolute inset-0 opacity-85"
-                style={{
-                  backgroundImage: `url('${featuredPost.heroImage?.src ?? "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1400&q=80"}')`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center"
-                }}
-              />
+              <div className="absolute inset-0 opacity-85" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1400&q=80')", backgroundSize: "cover", backgroundPosition: "center" }} />
               <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(0,43,74,0.78),rgba(0,78,125,0.42))]" />
               <div className="relative flex h-full flex-col justify-end">
                 <p className="text-sm font-semibold uppercase tracking-[0.16em] text-white/75">{featuredPost.category}</p>
