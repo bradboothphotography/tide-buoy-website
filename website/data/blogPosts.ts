@@ -8,13 +8,131 @@ export type BlogPost = {
   readTime: string;
   datePublished: string;
   dateModified: string;
+  heroImage?: BlogImage;
   sections: {
     heading: string;
     paragraphs: string[];
+    image?: BlogImage;
   }[];
 };
 
+export type BlogImage = {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+};
+
 export const blogPosts: BlogPost[] = [
+  {
+    slug: "what-is-a-king-tide",
+    title: "What Is a King Tide?",
+    metaTitle: "What Is a King Tide? A Simple Beach Planning Guide | Tide Buoy",
+    metaDescription: "Learn what a king tide is, why it matters for beach days, surfing, fishing, and boating, and how to check tide timing before you go.",
+    excerpt: "A simple guide to unusually high tides, beach access, surf timing, boating decisions, and what to check before you head for the coast.",
+    category: "Tide Planning",
+    readTime: "7 min read",
+    datePublished: "2026-06-25",
+    dateModified: "2026-06-25",
+    heroImage: {
+      src: "/images/journal/king-tides/king-tide-surf-swell-rocky-beach.jpeg",
+      alt: "Large surf breaking near a rocky beach during rough coastal conditions",
+      caption: "King tides matter most when high water combines with swell, wind, or local coastal hazards.",
+      width: 2172,
+      height: 1448
+    },
+    sections: [
+      {
+        heading: "Start with the simple meaning",
+        paragraphs: [
+          "A king tide is an unusually high tide. It is not a formal scientific term, but people use it to describe the kind of high tide that can push water farther up the beach, cover low areas, flood docks or streets, and make familiar coastal spots feel different than they do on a normal day.",
+          "For most beachgoers, surfers, fishermen, and boaters, the important part is simple: a king tide is a reason to pay closer attention to tide timing before you go."
+        ]
+      },
+      {
+        heading: "Why king tides happen",
+        paragraphs: [
+          "Tides are shaped mainly by the pull of the moon and sun. Higher-than-normal tides often happen around a new moon or full moon, when the sun, moon, and Earth line up in a way that strengthens the tidal pull. They can also be higher when the moon is closer to Earth, or during seasonal patterns that affect different coasts in different ways.",
+          "That does not mean every king tide causes flooding. Local weather, wind direction, swell, barometric pressure, shoreline shape, and sea level all matter. A predicted high tide may be manageable on a calm day, but the same tide can become more serious when wind, waves, or storm conditions push extra water toward shore.",
+          "That is why tide timing is only the first check. It tells you when the water is expected to be highest. Then you pair that with real-world conditions."
+        ],
+        image: {
+          src: "/images/journal/king-tides/king-tide-high-water-beach-shoreline.jpeg",
+          alt: "A calm shoreline with small waves washing high onto the sand",
+          caption: "The same beach can feel completely different as the tide rises toward its high point.",
+          width: 1536,
+          height: 2048
+        }
+      },
+      {
+        heading: "Why king tides matter for beach planning",
+        paragraphs: [
+          "A king tide can change a familiar beach quickly. A wide beach at low tide can become narrow at high tide. A dry walking route can get cut off. A sandbar can disappear. Rocks, jetties, seawalls, and inlet edges can become more dangerous when higher water combines with wave energy.",
+          "If you are heading to the coast during a king tide window, ask one practical question first: when is the next high tide, and is the water still rising?",
+          "If the tide is incoming, water is still pushing higher. If the tide is outgoing, the highest water may already have passed, but currents can still be strong as water drains away from beaches, inlets, bays, and channels. Tide direction matters because it tells you whether conditions are building toward the high point or easing away from it."
+        ],
+        image: {
+          src: "/images/journal/king-tides/king-tide-coastal-flooding-beach-access.jpeg",
+          alt: "A vehicle parked close to high water on a narrow beach access",
+          caption: "High water can affect access, parking, and the route back off the beach.",
+          width: 838,
+          height: 1144
+        }
+      },
+      {
+        heading: "For beachgoers",
+        paragraphs: [
+          "For a normal beach walk, shell hunt, or family beach day, king tides mostly affect space and access. A beach that looks open in the morning may shrink by afternoon. Water can reach dunes, seawalls, stairs, and access paths that usually stay dry.",
+          "Before you set up, check the next high tide. Avoid placing towels, chairs, coolers, or strollers close to the waterline during an incoming tide. If the beach is backed by cliffs, rocks, dunes, or a seawall, make sure there is still a clear way out as the water rises."
+        ]
+      },
+      {
+        heading: "For surfers",
+        paragraphs: [
+          "A king tide does not automatically mean good surf. It can help some breaks and hurt others. Some spots need more water to work. Others get too deep, soft, or backwashy near a very high tide. Beach breaks, reefs, points, and inlet setups all respond differently.",
+          "The best move is to think in windows. Check whether the tide is rising or falling, when high tide hits, and how that lines up with swell and wind. If a beach has warnings for large shorebreak, rip currents, or sneaker waves, treat that separately from whether the tide window looks good.",
+          "A good tide does not cancel out dangerous surf."
+        ]
+      },
+      {
+        heading: "For fishermen and boaters",
+        paragraphs: [
+          "For anglers, king tides can open up water over flats, marsh edges, docks, mangroves, oyster bars, and shoreline structure that may be too shallow at lower stages. That can create new feeding zones, especially when water is moving. But high water can also spread fish out, so the useful question is where the water will move and when that movement fits your spot.",
+          "Boaters should treat king tides as a planning signal around ramps, docks, bridges, sandbars, and shallow channels. Higher water may make some areas easier to access for a short window, but it can also hide hazards that are usually visible, increase current around inlets or passes, and make docking more awkward if wind and water are pushing together.",
+          "Before launching, check the high tide time, the low tide time, and whether your return window lines up with falling water. A trip that starts with plenty of depth can end with a different ramp, channel, or sandbar situation if you come back near low tide."
+        ],
+        image: {
+          src: "/images/journal/king-tides/king-tide-low-tide-boat-flats.jpeg",
+          alt: "A small boat sitting near exposed flats at low tide",
+          caption: "Tide height can change access around flats, channels, ramps, and shallow water.",
+          width: 1330,
+          height: 2364
+        }
+      },
+      {
+        heading: "What to check before you go",
+        paragraphs: [
+          "Use a short checklist: current tide, tide direction, next high tide, next low tide, weather and wind, surf or swell, and any local beach hazard, coastal flood, or rip current alerts.",
+          "Tide Buoy is built around that first quick read: current tide, tide direction, and the next high or low tide. That gives you the water-timing context before you layer in surf, weather, fishing, or boating details."
+        ]
+      },
+      {
+        heading: "Does a king tide always mean flooding?",
+        paragraphs: [
+          "No. A king tide means higher-than-normal tide potential. Flooding depends on the location and the conditions around it. Low-lying waterfront roads, docks, marsh edges, and harbor areas are more likely to notice it. A steep beach with calm weather may see less obvious impact.",
+          "A king tide can be dangerous when high water combines with strong surf, rip currents, sneaker waves, storm surge, or coastal flooding. The tide itself is predictable, but the water on top of that tide can change with weather and swell. If official local guidance says to stay out of the water, avoid rocks, avoid jetties, or expect coastal flooding, follow that guidance."
+        ]
+      },
+      {
+        heading: "The simple takeaway",
+        paragraphs: [
+          "A king tide is a reminder to check the water before you go. You do not need to memorize lunar cycles or read a complicated marine table. Start with the basics: current tide, whether the tide is incoming or outgoing, and the time of the next high or low tide. Then look at local weather, surf, and safety alerts.",
+          "Before your next beach walk, surf check, fishing trip, or boat launch, open Tide Buoy and check the current tide, tide direction, and next high or low tide before you go."
+        ]
+      }
+    ]
+  },
   {
     slug: "how-to-read-a-tide-chart",
     title: "How to Read a Tide Chart",

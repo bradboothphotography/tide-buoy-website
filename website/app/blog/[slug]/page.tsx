@@ -27,7 +27,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.metaDescription,
       url: `${siteConfig.url}/blog/${slug}`,
       siteName: siteConfig.name,
-      type: "article"
+      type: "article",
+      images: post.heroImage
+        ? [
+            {
+              url: `${siteConfig.url}${post.heroImage.src}`,
+              width: post.heroImage.width,
+              height: post.heroImage.height,
+              alt: post.heroImage.alt
+            }
+          ]
+        : undefined
     }
   };
 }
@@ -95,6 +105,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   url: `${siteConfig.url}/images/brand/tide-buoy-logo-blue.png`
                 }
               },
+              image: post.heroImage ? `${siteConfig.url}${post.heroImage.src}` : undefined,
               mainEntityOfPage: {
                 "@type": "WebPage",
                 "@id": `${siteConfig.url}/blog/${slug}`
@@ -117,6 +128,38 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <p className="mx-auto mt-8 max-w-2xl text-xl leading-9 text-[var(--muted)]">{post.excerpt}</p>
         </header>
 
+        {post.heroImage ? (
+          <figure className="card-shadow mt-14 overflow-hidden rounded-[2.4rem] border border-[var(--outline)] bg-white">
+            <img
+              src={post.heroImage.src}
+              alt={post.heroImage.alt}
+              width={post.heroImage.width}
+              height={post.heroImage.height}
+              className="aspect-[16/10] h-auto w-full object-cover"
+            />
+            <figcaption className="px-6 py-4 text-sm leading-6 text-[var(--muted)] md:px-8">{post.heroImage.caption}</figcaption>
+          </figure>
+        ) : null}
+
+        {post.slug === "what-is-a-king-tide" ? (
+          <div className="mt-12 rounded-[2rem] border border-[var(--outline)] bg-[var(--surface-soft)] px-6 py-6 md:px-8">
+            <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--primary)]">Quick check</p>
+                <p className="mt-3 text-lg leading-8 text-[var(--muted)]">
+                  Check the current tide, tide direction, and next high or low tide in Tide Buoy before you go.
+                </p>
+              </div>
+              <Link
+                href="/app"
+                className="cta-button button-blue inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold"
+              >
+                Open Tide Buoy
+              </Link>
+            </div>
+          </div>
+        ) : null}
+
         <div className="mx-auto mt-16 max-w-3xl">
           <div className="border-t border-[var(--outline)] pt-12">
             {post.sections.map((section, index) => (
@@ -129,6 +172,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     </p>
                   ))}
                 </div>
+                {section.image ? (
+                  <figure className="mt-10 overflow-hidden rounded-[2rem] border border-[var(--outline)] bg-[var(--surface-soft)]">
+                    <img
+                      src={section.image.src}
+                      alt={section.image.alt}
+                      width={section.image.width}
+                      height={section.image.height}
+                      className="max-h-[680px] w-full object-cover"
+                    />
+                    <figcaption className="px-5 py-4 text-sm leading-6 text-[var(--muted)] md:px-6">{section.image.caption}</figcaption>
+                  </figure>
+                ) : null}
               </section>
             ))}
           </div>
