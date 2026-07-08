@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { blogPosts, getBlogPost } from "@/data/blogPosts";
@@ -27,7 +28,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.metaDescription,
       url: `${siteConfig.url}/blog/${slug}`,
       siteName: siteConfig.name,
-      type: "article"
+      type: "article",
+      images: post.images?.[0]
+        ? [
+            {
+              url: `${siteConfig.url}${post.images[0].src}`,
+              alt: post.images[0].alt
+            }
+          ]
+        : undefined
     }
   };
 }
@@ -82,6 +91,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               description: post.metaDescription,
               datePublished: post.datePublished,
               dateModified: post.dateModified,
+              image: post.images?.map((image) => `${siteConfig.url}${image.src}`),
               author: {
                 "@type": "Organization",
                 name: siteConfig.name
@@ -115,6 +125,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <time dateTime={post.dateModified}>Updated {new Date(`${post.dateModified}T00:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</time>
           </div>
           <p className="mx-auto mt-8 max-w-2xl text-xl leading-9 text-[var(--muted)]">{post.excerpt}</p>
+          {post.seoTags?.length ? (
+            <div className="mt-8 flex flex-wrap justify-center gap-2">
+              {post.seoTags.map((tag) => (
+                <span key={tag} className="rounded-full border border-[var(--outline)] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--primary)]">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          ) : null}
         </header>
 
         <div className="mx-auto mt-16 max-w-3xl">
@@ -128,7 +147,46 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                       {paragraph}
                     </p>
                   ))}
+                  {section.items?.length ? (
+                    <ul className="space-y-3 rounded-[1.5rem] border border-[var(--outline)] bg-white p-6 text-lg leading-8 text-[var(--muted)]">
+                      {section.items.map((item) => (
+                        <li key={item} className="flex gap-3">
+                          <span className="mt-3 h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--primary)]" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </div>
+                {section.imageIndexes?.length && post.images ? (
+                  <div className={`mt-8 grid gap-4 ${section.imageIndexes.length > 1 ? "md:grid-cols-2" : ""}`}>
+                    {section.imageIndexes.map((imageIndex) => {
+                      const image = post.images?.[imageIndex];
+                      if (!image) {
+                        return null;
+                      }
+
+                      return (
+                        <figure key={image.src} className="overflow-hidden rounded-[1.5rem] border border-[var(--outline)] bg-white shadow-sm">
+                          <div className={`relative w-full bg-[var(--surface-soft)] ${image.aspectClass ?? "aspect-[4/3]"}`}>
+                            <Image
+                              src={image.src}
+                              alt={image.alt}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              className="object-cover"
+                              style={image.focalPoint ? { objectPosition: image.focalPoint } : undefined}
+                              priority={index === 0 && imageIndex === 0}
+                            />
+                          </div>
+                          <figcaption className="px-4 py-3 text-sm leading-6 text-[var(--muted)]">
+                            <span className="font-semibold text-[var(--primary)]">{image.tag}:</span> {image.caption}
+                          </figcaption>
+                        </figure>
+                      );
+                    })}
+                  </div>
+                ) : null}
               </section>
             ))}
           </div>
