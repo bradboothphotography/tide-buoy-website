@@ -17,6 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {};
   }
 
+  const ogImage = post.heroImage ?? post.images?.[0];
+
   return {
     title: post.metaTitle,
     description: post.metaDescription,
@@ -29,13 +31,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       url: `${siteConfig.url}/blog/${slug}`,
       siteName: siteConfig.name,
       type: "article",
-      images: post.heroImage || post.images?.[0]
+      images: ogImage
         ? [
             {
-              url: `${siteConfig.url}${(post.heroImage ?? post.images?.[0])!.src}`,
-              width: (post.heroImage ?? post.images?.[0])!.width,
-              height: (post.heroImage ?? post.images?.[0])!.height,
-              alt: (post.heroImage ?? post.images?.[0])!.alt
+              url: `${siteConfig.url}${ogImage.src}`,
+              width: post.heroImage?.width,
+              height: post.heroImage?.height,
+              alt: ogImage.alt
             }
           ]
         : undefined
