@@ -26,6 +26,118 @@ export type BlogImage = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "florida-scallop-season-tide-guide",
+    title: "Florida Scallop Season Tide Guide: How to Plan Around Low Tide and Grass Flats",
+    metaTitle: "Florida Scallop Season Tide Guide | Tide Buoy",
+    metaDescription: "Planning a Florida scalloping trip? Use tide timing, tide direction, wind, grass flats, and FWC season zones to plan a better day on the water.",
+    excerpt: "A Florida scallop season guide for checking the tide, grass flats, wind, water clarity, and the ride home before you launch.",
+    category: "Boating",
+    readTime: "7 min read",
+    datePublished: "2026-07-08",
+    dateModified: "2026-07-08",
+    heroImage: {
+      src: "/images/journal/florida-scallop-season-tide-guide/florida-scallop-season-clear-grass-flats.jpeg",
+      alt: "Clear shallow Florida grass flats beside a small boat during scallop season",
+      caption: "Clear, shallow grass flats are the kind of water many scallopers hope to find.",
+      width: 3542,
+      height: 888
+    },
+    sections: [
+      {
+        heading: "Start with the open zone, then look at the tide",
+        paragraphs: [
+          "Florida scallop season is a summer ritual on the Gulf Coast. Before you load the boat, masks, fins, cooler, and kids, check two things first: whether your zone is open and what the tide is doing.",
+          "A lot of scallopers like lower water over grass flats because scallops can be easier to spot and reach. Low tide is not magic, though. If it leaves you with a shallow ramp, exposed flats, strong wind, or a hard ride home, it may not be the right window."
+        ]
+      },
+      {
+        heading: "Why tide matters for scalloping",
+        paragraphs: [
+          "Scalloping usually happens over shallow grass flats. You are looking for bay scallops tucked in or near seagrass, often while snorkeling from a boat.",
+          "Tide changes the depth, the view, and the route in. A flat that feels perfect at one stage of tide can be too deep, too skinny, or tough to reach an hour later. The same low tide that helps you see scallops can make ramps, bars, and backwater cuts less forgiving."
+        ],
+        image: {
+          src: "/images/journal/florida-scallop-season-tide-guide/florida-scallop-season-boat-ride-gulf-water.jpeg",
+          alt: "Small boat running across green Gulf Coast water under a blue sky",
+          caption: "Before the boat ride, check the tide, weather, and zone rules.",
+          width: 1536,
+          height: 2048
+        }
+      },
+      {
+        heading: "Is low tide best for scalloping?",
+        paragraphs: [
+          "Low tide can help because there is less water between you and the grass. In many scalloping areas, shallower water makes it easier to see the bottom and drop down without burning energy all day.",
+          "The lowest number on the tide chart is not always the best plan. Look for a window where the grass flats are reachable, visible, legal to harvest, and still practical for your boat. For many beginner groups, a slightly rising tide after low is a better compromise because water is coming back over the flats instead of draining away."
+        ],
+        image: {
+          src: "/images/journal/florida-scallop-season-tide-guide/florida-scallop-season-diver-over-seagrass.jpeg",
+          alt: "Snorkeler diving over blue water and seagrass while looking for scallops",
+          caption: "Lower water can make the bottom easier to see, but it can tighten up the shallows for the boat.",
+          width: 2172,
+          height: 1448
+        }
+      },
+      {
+        heading: "Incoming vs outgoing tide for scalloping",
+        paragraphs: [
+          "Incoming tide means the water is rising toward the next high tide. Outgoing tide means the water is falling toward the next low tide.",
+          "Incoming tide can help when you want a little more water over the flats or a safer ride back through shallow cuts. Outgoing tide can work if you want the water to get skinnier while you search, but pay attention. Falling water can turn a simple ride home into a careful idle through skinny water."
+        ],
+        image: {
+          src: "/images/journal/florida-scallop-season-tide-guide/florida-scallop-season-snorkel-mask-underwater.jpeg",
+          alt: "Close-up underwater view of a snorkeler wearing a mask in clear blue water",
+          caption: "For beginners, comfort in the water beats chasing a perfect tide number.",
+          width: 2172,
+          height: 1448
+        }
+      },
+      {
+        heading: "Tide is only one part of a good scallop day",
+        paragraphs: [
+          "Do not use tide alone to decide whether to go. Wind can chop up shallow Gulf water and cloud the bottom. Summer storms can stack up fast. Popular scallop spots can get crowded. Some days look right on the tide chart and still do not give you the visibility you wanted.",
+          "FWC notes that bay scallop populations are tied to environmental conditions, harmful algal blooms, and seagrass health. A tide check helps you pick a smarter window. It does not guarantee clear water, scallop numbers, or a safe day."
+        ],
+        image: {
+          src: "/images/journal/florida-scallop-season-tide-guide/florida-scallop-season-clear-water-dive.jpeg",
+          alt: "Diver swimming through clear blue water above a bright sandy bottom",
+          caption: "Tide timing helps you choose the window. Wind and weather still decide a lot of the visibility.",
+          width: 1448,
+          height: 2172
+        }
+      },
+      {
+        heading: "Florida scallop tide checklist",
+        paragraphs: [
+          "Before you leave, do one last plain-English check.",
+          "Confirm your FWC scallop zone and season dates. Check the current tide near your launch or scalloping area. Look at whether the tide is incoming or outgoing, then check the next high tide and next low tide.",
+          "Decide whether low tide helps visibility or creates a boating problem. Check wind, storms, and the local marine forecast. Confirm license, bag limit, gear, and dive flag requirements. Plan your return before the tide makes shallow water harder to run."
+        ],
+        image: {
+          src: "/images/journal/florida-scallop-season-tide-guide/florida-scallop-season-kayak-clear-spring.jpeg",
+          alt: "Green kayak floating over clear water near a wooded Florida shoreline",
+          caption: "Shallow-water access changes quickly, whether you are boating, paddling, or wading.",
+          width: 768,
+          height: 1024
+        }
+      },
+      {
+        heading: "The bottom line",
+        paragraphs: [
+          "The best tide for Florida scallop season is the one that gives you reachable grass flats without turning the boat ride into a shallow-water problem. Low tide can help with spotting scallops, but tide direction, wind, water clarity, storms, regulations, and access all matter.",
+          "Before you launch, check the current tide, tide direction, and next high or low tide in Tide Buoy. Then confirm FWC rules and local marine conditions so your scallop day starts with a real plan."
+        ],
+        image: {
+          src: "/images/journal/florida-scallop-season-tide-guide/florida-scallop-season-snorkeler-calm-surface.jpeg",
+          alt: "Snorkeler floating at the surface on a calm blue Florida water day",
+          caption: "Wind and chop can cloud up shallow water even when the tide looks right.",
+          width: 2172,
+          height: 1448
+        }
+      }
+    ]
+  },
+  {
     slug: "what-is-a-king-tide",
     title: "What Is a King Tide?",
     metaTitle: "What Is a King Tide? A Simple Beach Planning Guide | Tide Buoy",
