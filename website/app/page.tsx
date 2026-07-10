@@ -6,29 +6,38 @@ import { FAQSection } from "@/components/FAQSection";
 import { FeatureCarousel } from "@/components/FeatureCarousel";
 import { UseCaseCarousel } from "@/components/UseCaseCarousel";
 import { siteConfig } from "@/data/siteConfig";
+import { useCasePages } from "@/data/useCases";
 
 export const metadata: Metadata = {
-  title: "Tide App Made Simple | Tide Buoy",
-  description: "Tide Buoy is a simple tide app for surfers, fishermen, boaters, beachgoers, and coastal locals who want fast tide checks.",
+  title: "Best Tide App for Quick Tides and Exact Location Checks | Tide Buoy",
+  description:
+    "Tide Buoy is an easy to use tide app for surfers, fishermen, boaters, beachgoers, and divers who want quick tides and exact location checks.",
+  keywords: [
+    "best tide app",
+    "easy to use tide app",
+    "quick tides",
+    "exact location",
+    "tide app for surfers",
+    "fishing tide app",
+    "boating tide app"
+  ],
   alternates: {
     canonical: siteConfig.url
   },
   openGraph: {
-    title: "Tide App Made Simple | Tide Buoy",
-    description: "Tide Buoy is a simple tide app for surfers, fishermen, boaters, beachgoers, and coastal locals who want fast tide checks.",
+    title: "Best Tide App for Quick Tides and Exact Location Checks | Tide Buoy",
+    description:
+      "Tide Buoy is an easy to use tide app for surfers, fishermen, boaters, beachgoers, and divers who want quick tides and exact location checks.",
     url: siteConfig.url,
     siteName: siteConfig.name,
     type: "website"
   }
 };
 
-const useCases = [
-  ["Surfing", "https://lh3.googleusercontent.com/aida-public/AB6AXuB9Gl70Ap-9aFCPX7aDhGO6-210PaD3alTXTFEyP9-hvXbv4rEpeX2ypjGsRl2qKOVejoZLIII6KHcqoyS5cwe1HyYwN4vx7KBYSVaMDbJogLWLlcZhLovjMY8exOFj0kWGhblvNZBmlL2Q3p9H4EvgZ7IxgXXZ_nnX8m4GwUeIWx3Hen2XacgJrw0kk6QWeTYV7kgrCKA4fpTnErnxP2ix7Y7pyWxaNFhZNN3fBeTBrkOMEF2l1EGy03z0o8o9iGM-J1xgZIhxYYA"],
-  ["Fishing", "/images/use-cases/fishing.jpeg"],
-  ["Boating", "/images/use-cases/boating.jpeg"],
-  ["Beach Days", "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"],
-  ["Diving", "/images/use-cases/diving.jpeg"]
-] as const;
+const useCases = ["surfing", "fishing", "boating", "beach-days", "diving"].flatMap((slug) => {
+  const useCase = useCasePages.find((entry) => entry.slug === slug);
+  return useCase ? [[useCase.title, useCase.heroImage.src, `/use-cases/${useCase.slug}`] as const] : [];
+});
 
 function ImageCard({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
   return <img src={src} alt={alt} className={className} />;
@@ -39,7 +48,7 @@ export default function HomePage() {
     {
       question: "What is Tide Buoy?",
       answer:
-        "Tide Buoy is a simple tide app for checking tide charts, tide direction, daily highs and lows, saved spots, and coastal planning on iPhone."
+        "Tide Buoy is an easy to use tide app for quick tides, tide direction, saved spots, and exact-location coastal planning on iPhone."
     },
     {
       question: "Who is Tide Buoy for?",
@@ -65,7 +74,7 @@ export default function HomePage() {
                 "@id": `${siteConfig.url}/#website`,
                 name: siteConfig.name,
                 url: siteConfig.url,
-                description: "A simple tide app website for tide charts, tide direction, tide timing, and coastal planning."
+                description: "An easy to use tide app website for quick tides, tide direction, exact location checks, and coastal planning."
               },
               {
                 "@type": "Organization",
@@ -101,8 +110,8 @@ export default function HomePage() {
             Tide App Made Simple.
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-[var(--muted)] md:text-xl">
-            Tide Buoy is the tide app for checking the tide, planning your session, and knowing what the water is doing whether you&apos;re surfing,
-            fishing, boating, shell hunting, shooting photos, or heading to the beach.
+            Tide Buoy is an easy to use tide app for quick tides in your exact location, whether you&apos;re surfing, fishing, boating,
+            diving, shell hunting, shooting photos, or heading to the beach.
           </p>
           <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
             <AppStoreButton className="px-8 py-4 text-base" label="Download for iPhone" />
@@ -182,6 +191,11 @@ export default function HomePage() {
 
       <section id="use-cases" className="bg-[var(--surface)] py-20">
         <div className="container-shell">
+          <div className="mb-6 flex justify-end">
+            <Link href="/use-cases" className="text-sm font-semibold text-[var(--primary)]">
+              View all guides
+            </Link>
+          </div>
           <UseCaseCarousel items={useCases} />
         </div>
       </section>

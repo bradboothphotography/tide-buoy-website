@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   description: "Tide Buoy is a simple tide app for checking tide charts, tide direction, highs, lows, and coastal planning on iPhone.",
   keywords: [
     "tide app",
+    "best tide app",
+    "easy to use tide app",
+    "quick tides",
+    "exact location",
     "tide chart app",
     "simple tide app",
     "surf tide app",

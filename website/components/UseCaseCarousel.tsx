@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useRef } from "react";
 
-type UseCaseItem = readonly [title: string, image: string];
+type UseCaseItem = readonly [title: string, image: string, href: string];
 
 type UseCaseCarouselProps = {
   items: readonly UseCaseItem[];
@@ -66,9 +67,10 @@ export function UseCaseCarousel({ items }: UseCaseCarouselProps) {
         ref={trackRef}
         className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
-        {items.map(([title, image]) => (
-          <div
+        {items.map(([title, image, href]) => (
+          <Link
             key={title}
+            href={href}
             data-use-case-card
             className="group min-w-[78%] snap-center sm:min-w-[320px] lg:min-w-[340px]"
           >
@@ -77,9 +79,10 @@ export function UseCaseCarousel({ items }: UseCaseCarouselProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6">
                 <h3 className="display-face text-2xl font-bold text-white">{title}</h3>
+                <p className="mt-2 text-sm font-semibold uppercase tracking-[0.12em] text-white/78">Open guide</p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
