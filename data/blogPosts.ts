@@ -37,6 +37,129 @@ export type BlogImage = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "rip-currents-and-tide",
+    title: "Rip Currents and Tide: What Florida Beachgoers Should Check Before Swimming",
+    metaTitle: "Rip Currents and Tide | Florida Beach Safety | Tide Buoy",
+    metaDescription: "Learn how tide timing can affect rip-current conditions and what Florida beachgoers should check before swimming, including beach flags, surf, lifeguards, and local forecasts.",
+    excerpt: "A practical Florida beach safety guide for checking the tide, rip-current risk, surf, beach flags, and lifeguard guidance before getting in the water.",
+    category: "Beach Safety",
+    readTime: "7 min read",
+    datePublished: "2026-07-14",
+    dateModified: "2026-07-14",
+    heroImage: {
+      src: "/images/blog/rip-currents-and-tide/rip-currents-and-tide-rough-surf.jpeg",
+      alt: "Rough surf breaking across a Florida beach under a blue sky",
+      caption: "Rough surf is a reminder to check more than the tide before swimming.",
+      width: 2048,
+      height: 1536
+    },
+    seoTags: ["rip currents and tide", "Florida rip current risk", "beach safety", "tide direction", "swimming conditions", "beach flags"],
+    images: [
+      {
+        src: "/images/blog/rip-currents-and-tide/rip-currents-and-tide-rough-surf.jpeg",
+        alt: "Rough surf breaking across a Florida beach under a blue sky",
+        caption: "Rough surf is a reminder to check more than the tide before swimming.",
+        tag: "surf-zone check",
+        focalPoint: "center center",
+        aspectClass: "aspect-[16/7]"
+      },
+      {
+        src: "/images/blog/rip-currents-and-tide/rip-currents-and-tide-dune-surf.jpeg",
+        alt: "Ocean surf viewed from behind beach dunes and sea grass",
+        caption: "Pause at the dune line and read the beach before walking into the water.",
+        tag: "before you swim",
+        focalPoint: "center 46%",
+        aspectClass: "aspect-[4/5]"
+      },
+      {
+        src: "/images/blog/rip-currents-and-tide/rip-currents-and-tide-swimmers.jpeg",
+        alt: "Two people standing near breaking waves on a sunny beach",
+        caption: "Even inviting beach days need a quick check on tide, surf, flags, and lifeguard guidance.",
+        tag: "swim planning",
+        focalPoint: "center center"
+      }
+    ],
+    sections: [
+      {
+        heading: "Tide matters, but it is not the whole forecast",
+        paragraphs: [
+          "Tide matters before a swim, but it is not a rip-current forecast by itself.",
+          "A better way to think about it is simple: tide changes the water level, the shoreline, the sandbars, and where waves are breaking. Those details can affect rip-current conditions. Rip currents also depend on surf height, wave direction, beach shape, piers, jetties, storms, and local conditions that change fast.",
+          "So check the tide first. Then check the local rip-current risk, beach flags, lifeguard guidance, weather, and surf."
+        ],
+        imageIndexes: [0]
+      },
+      {
+        heading: "What is a rip current?",
+        paragraphs: [
+          "A rip current is a narrow flow of water moving away from the beach through the surf zone. It does not pull you under. The danger is that it can carry swimmers away from shore faster than they expect.",
+          "Rip currents often form where water pushed toward the beach by breaking waves finds a path back out. That can happen near gaps in sandbars, beside piers and jetties, around groins, or in channels where waves are breaking differently from the water around them.",
+          "They can be hard to spot. Sometimes the water in a rip looks calmer than the breaking waves beside it. That calm-looking gap can be the wrong place to swim."
+        ],
+        imageIndexes: [1]
+      },
+      {
+        heading: "How tide can affect rip-current risk",
+        paragraphs: [
+          "Tide changes the depth of water over sandbars and near the beach. That changes where waves break.",
+          "On many ocean beaches with smaller tidal ranges, rip currents can flow faster around an hour or two on either side of low tide because shallower water can increase breaking wave activity over bars. On beaches with larger tidal ranges, the strongest window may be closer to mid tide if bars become exposed at low tide.",
+          "That does not mean every low tide is dangerous or every high tide is safe. It means tide stage is one piece of the beach setup. A low tide may expose sandbars, channels, troughs, and steeper drop-offs. A rising tide may cover bars and change where people stand, wade, or swim. A high tide may push water higher on the beach and reduce some breaking over outer bars, but it can also leave less dry sand and stronger shorebreak in some places."
+        ],
+        imageIndexes: [2]
+      },
+      {
+        heading: "Is outgoing tide worse for rip currents?",
+        paragraphs: [
+          "Not automatically.",
+          "Rip-current speed is tied to water level because water level affects wave breaking. That is different from saying rip currents are always stronger simply because the tide is falling. A falling tide can matter, but it is not the only thing to watch.",
+          "At inlets, passes, bays, and harbor mouths, outgoing water can create strong tidal currents. Those are real hazards, but they are not the same thing as surf-zone rip currents on an open beach."
+        ]
+      },
+      {
+        heading: "Florida beach checklist before swimming",
+        paragraphs: [
+          "Before getting in the water, keep the check plain and practical."
+        ],
+        items: [
+          "Current tide and whether water is rising or falling",
+          "Next high tide and next low tide",
+          "Local rip-current risk from the National Weather Service",
+          "Beach flags at the access point",
+          "Lifeguard guidance",
+          "Surf height and wave direction",
+          "Wind, thunderstorms, and tropical weather",
+          "Nearby piers, jetties, inlets, or channels",
+          "Red tide status on Gulf Coast beach days",
+          "Whether children or weaker swimmers can stay near a lifeguard"
+        ]
+      },
+      {
+        heading: "What beachgoers should watch from shore",
+        paragraphs: [
+          "When you arrive, pause before swimming. Look at the water from a slightly higher spot if you can.",
+          "Watch for gaps in the line of breaking waves, darker or choppier water moving away from shore, foam or sand being carried seaward, or a narrow channel near a pier or jetty. Those signs are not always obvious, and not every rip current is easy to see.",
+          "If lifeguards are present, ask where the safer swimming area is. Swim near them when possible."
+        ]
+      },
+      {
+        heading: "Where Tide Buoy fits",
+        paragraphs: [
+          "Tide Buoy helps with the tide part of the decision. Open the app and look at the current tide, tide direction, and next high or low tide before you leave or before you walk down to the water.",
+          "That quick check helps you understand whether the shoreline is filling in, draining out, nearing low water, or moving toward high water. It is useful context for beach walks, swimming plans, surf checks, shelling, photography, and family beach days.",
+          "Pair that tide check with official beach safety information. Use local National Weather Service forecasts, beach flags, lifeguards, and county beach updates for rip-current risk."
+        ]
+      },
+      {
+        heading: "The bottom line",
+        paragraphs: [
+          "The tide can influence rip-current conditions because it changes water depth and wave breaking. Tide alone does not tell you whether swimming is safe.",
+          "For a smarter Florida beach day, check the tide first, then check rip-current risk, surf, wind, weather, beach flags, and lifeguard guidance. If anything looks questionable, stay out of the water or stay near a guarded swimming area.",
+          "Before you go, check the current tide, tide direction, and next high or low tide in Tide Buoy. Then confirm local beach conditions before anyone gets in."
+        ]
+      }
+    ]
+  },
+  {
     slug: "florida-beach-day-tide-checklist",
     title: "Florida Beach Day Tide Checklist: What to Check Before You Go",
     metaTitle: "Florida Beach Day Tide Checklist | Tide Buoy",
