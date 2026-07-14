@@ -37,6 +37,162 @@ export type BlogImage = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "el-nino-surf-fishing",
+    title: "How El Nino Can Affect Surf and Fishing",
+    metaTitle: "How El Nino Affects Surf and Fishing | Tide Buoy",
+    metaDescription:
+      "El Nino can bring better swell windows, changing fish patterns, rougher water, dirty runoff, and harder planning. Learn what surfers and fishermen should check.",
+    excerpt:
+      "El Nino can create real opportunities for surfers and fishermen, but it can also bring wind, runoff, rough water, stronger currents, and less predictable conditions.",
+    category: "Surf & Fishing",
+    readTime: "8 min read",
+    datePublished: "2026-07-14",
+    dateModified: "2026-07-14",
+    heroImage: {
+      src: "/images/blog/el-nino-surf-fishing/el-nino-surf-fishing-big-wave-spray.jpeg",
+      alt: "Surfer riding high on a powerful blue wave with spray blowing offshore",
+      caption: "El Nino can send more energy into the ocean, but not every bigger swell turns into a better session. Photo: Brad Booth, bradboothmedia.com.",
+      width: 540,
+      height: 360
+    },
+    seoTags: ["El Nino surf", "El Nino fishing", "surf forecast", "fishing conditions", "swell", "tide timing"],
+    images: [
+      {
+        src: "/images/blog/el-nino-surf-fishing/el-nino-surf-fishing-surfer-shorebreak.jpeg",
+        alt: "Surfer watching large blue waves from the beach with a bright surfboard",
+        caption: "El Nino can bring exciting swell windows, but bigger surf needs more respect from the beach. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "swell check",
+        focalPoint: "center 47%",
+        aspectClass: "aspect-[16/9]"
+      },
+      {
+        src: "/images/blog/el-nino-surf-fishing/el-nino-surf-fishing-cliff-lines.jpeg",
+        alt: "Long lines of swell wrapping toward a beach below coastal cliffs",
+        caption: "Long-period lines are the upside surfers hope for, especially when wind and tide cooperate. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "long-period swell",
+        focalPoint: "center center"
+      },
+      {
+        src: "/images/blog/el-nino-surf-fishing/el-nino-surf-fishing-pier-rough-surf.jpeg",
+        alt: "Large rough surf breaking near a pier on a cloudy beach",
+        caption: "The downside is real too: rough surf, stronger currents, and conditions that can turn fast. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "rough water",
+        focalPoint: "center center"
+      },
+      {
+        src: "/images/blog/el-nino-surf-fishing/el-nino-surf-fishing-sunset-turn.jpeg",
+        alt: "Surfer carving on a wave at sunset with spray backlit by orange light",
+        caption: "A good El Nino window still needs the basics: swell direction, wind, tide, and a spot that can hold the size. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "clean window",
+        focalPoint: "center center"
+      },
+      {
+        src: "/images/blog/el-nino-surf-fishing/el-nino-surf-fishing-beach-walk-swell.jpeg",
+        alt: "Two surfers walking along a sandy beach with waves breaking offshore",
+        caption: "Before the paddle or the fishing trip, read the local conditions instead of trusting the headline. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "before you go",
+        focalPoint: "center center"
+      }
+    ],
+    sections: [
+      {
+        heading: "El Nino can help, but it can also make a mess",
+        paragraphs: [
+          "El Nino gets surfers and fishermen paying attention because it can change the pattern behind the pattern. The ocean may see stronger storm systems, different swell windows, warmer or cooler water in the wrong places, heavier rain in some regions, and fish that do not behave exactly like they did last season.",
+          "That can be good. It can also be a pain.",
+          "For surfers, El Nino can mean more swell and a few standout days. For fishermen, it can move bait, change water temperature, and create new windows around current, structure, and cleaner water. The downside is that the same pattern can bring wind, runoff, rough water, stronger currents, beach erosion, dirty water, and cancelled trips."
+        ],
+        imageIndexes: [0]
+      },
+      {
+        heading: "What El Nino actually changes",
+        paragraphs: [
+          "El Nino starts in the tropical Pacific, where warmer-than-normal water can shift weather patterns across large areas. That does not mean your local beach gets one guaranteed result. It means the odds around weather, storms, rainfall, wind, and swell may change for a season.",
+          "NOAA's July 2026 ENSO update says El Nino is active and expected to strengthen through the end of 2026. That makes it worth watching now, especially for fall and winter surf and fishing plans.",
+          "The useful way to think about it is simple: El Nino is not your forecast. It is the background setup. Your real decision still comes from local wind, swell, water quality, water temperature, tide, rainfall, and marine conditions."
+        ],
+        imageIndexes: [1, 2]
+      },
+      {
+        heading: "How El Nino can benefit surfing",
+        paragraphs: [
+          "The upside for surfers is swell. In the right region, El Nino can help set up more active storm tracks and longer-period swell. Some spots that sleep through average weeks can wake up when the ocean has more energy.",
+          "Better surf is most likely when the pieces line up: swell direction, period, wind, tide, and a sandbar or reef that can handle the size. A strong El Nino pattern may help send the swell, but the local setup still decides whether it turns into a good session.",
+          "For experienced surfers, that can mean bigger days, more powerful lines, and more chances at spots that need a real pulse. For newer surfers, it can mean more days to watch from the sand."
+        ],
+        imageIndexes: [3]
+      },
+      {
+        heading: "The surfing downside",
+        paragraphs: [
+          "El Nino surf can get overhyped. More swell does not always mean better waves.",
+          "The negatives can show up fast: blown-out surf, closeouts, heavy shorebreak, stronger rip currents, crowded forecasts, beach erosion, storm runoff, and water that should be avoided after heavy rain. A swell can look perfect on a chart and still arrive with the wrong wind or too much size for the beach.",
+          "This is where tide matters a little. Some breaks need more water. Some get better as the tide drops. Some turn into a mess at high tide or get too shallow at low tide. During a stronger swell pattern, a bad tide window can make an already powerful ocean less forgiving."
+        ]
+      },
+      {
+        heading: "How El Nino can benefit fishing",
+        paragraphs: [
+          "Fishing is more complicated because El Nino does not help every species or every coast the same way. Still, changes in weather, water temperature, current, and bait can create openings for people who adjust.",
+          "Bait may move. Fish may slide into cleaner water, deeper edges, inlets, passes, or areas with better salinity. Offshore, temperature breaks and current edges may become more important. Inshore, the best bite may come when stable weather lines up with moving water after a messy stretch.",
+          "That is the opportunity. El Nino can shake up the usual routine enough that fishermen who pay attention find patterns other people miss."
+        ]
+      },
+      {
+        heading: "The fishing downside",
+        paragraphs: [
+          "The bad side is usually water quality and access.",
+          "Heavy rain can push freshwater into estuaries and backwaters. Wind can dirty up flats. Runoff can hurt clarity. Rough seas can keep smaller boats at the dock. A spot that usually fishes well on a certain tide may feel dead if the water is muddy, the bait moved, or the salinity changed.",
+          "El Nino can also make planning less predictable. You may need to stop fishing last month's pattern and start looking for cleaner water, steadier temperature, active bait, and safer windows."
+        ]
+      },
+      {
+        heading: "Where tides fit in",
+        paragraphs: [
+          "Tides are not the main El Nino story, but they still matter once you are planning a real session or trip.",
+          "For surfers, tide changes how a wave breaks. A powerful swell at the wrong tide can be too deep, too drained, too fast, or too heavy. For fishermen, tide moves water, bait, scent, and fish. Moving water around inlets, docks, flats, bridges, oyster bars, and shorelines can still make the difference.",
+          "Use Tide Buoy for the tide part: current tide, tide direction, and the next high or low tide. Then check surf, wind, marine weather, rainfall, water quality, and local safety info before you go."
+        ],
+        imageIndexes: [4]
+      },
+      {
+        heading: "Quick checklist for surfers",
+        paragraphs: ["Before paddling out during an El Nino pattern, check the full setup."],
+        items: [
+          "Swell height, period, and direction",
+          "Wind direction and whether it is expected to switch",
+          "Current tide and whether the tide is rising or falling",
+          "Whether your spot can hold the size",
+          "Rip current risk and beach hazard statements",
+          "Recent rainfall and water quality",
+          "Your own comfort level if the surf is bigger than normal"
+        ]
+      },
+      {
+        heading: "Quick checklist for fishermen",
+        paragraphs: ["Before heading out, look for the cleanest and safest window instead of chasing the old routine."],
+        items: [
+          "Current tide, tide direction, and next high or low",
+          "Wind speed and direction",
+          "Rainfall over the last few days",
+          "Water clarity and salinity changes",
+          "Water temperature",
+          "Bait activity",
+          "Marine forecast and storm risk",
+          "Safe launch, inlet, and return conditions"
+        ]
+      },
+      {
+        heading: "Bottom line",
+        paragraphs: [
+          "El Nino can be good for surf and fishing. It can also ruin plans.",
+          "For surfers, the benefit is more energy in the ocean and better chances at real swell. The downside is rougher water, stronger currents, bad wind, erosion, and dirty runoff. For fishermen, the benefit is changing bait and fish movement that can create new patterns. The downside is muddy water, salinity swings, rough boating, and less predictable bites.",
+          "Treat El Nino as a heads-up, not a promise. Check the local weather, surf, marine forecast, water quality, and safety guidance. Then check the current tide, tide direction, and next high or low tide in Tide Buoy before you go."
+        ]
+      }
+    ]
+  },
+  {
     slug: "rip-currents-and-tide",
     title: "Rip Currents and Tide: What Florida Beachgoers Should Check Before Swimming",
     metaTitle: "Rip Currents and Tide | Florida Beach Safety | Tide Buoy",
