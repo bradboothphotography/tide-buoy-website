@@ -37,6 +37,161 @@ export type BlogImage = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "storm-surge-and-high-tide",
+    title: "Storm Surge and High Tide: A Tropical Storm and Hurricane Checklist",
+    metaTitle: "Storm Surge and High Tide | Hurricane Tide Checklist | Tide Buoy",
+    metaDescription:
+      "Use this tropical storm and hurricane checklist to understand storm surge, high tide, surf, rip currents, and local warnings before going near the coast.",
+    excerpt:
+      "Storm surge can turn a normal high tide into a serious coastal flooding problem. Check these tide and safety basics before going near the water during a tropical storm or hurricane.",
+    category: "Storm Safety",
+    readTime: "8 min read",
+    datePublished: "2026-07-22",
+    dateModified: "2026-07-22",
+    heroImage: {
+      src: "/images/blog/storm-surge-and-high-tide/storm-surge-damaged-boats-marina.jpeg",
+      alt: "Storm surge damaged boats leaning against a marina dock after coastal flooding",
+      caption: "Storm water does not stop at the beach. Marinas, docks, canals, and tied-up boats can take the hit too. Photo: Brad Booth, bradboothmedia.com.",
+      width: 2172,
+      height: 1448
+    },
+    seoTags: ["storm surge and high tide", "hurricane tide checklist", "tropical storm and hurricane safety", "coastal flooding", "rip currents", "tide timing"],
+    images: [
+      {
+        src: "/images/blog/storm-surge-and-high-tide/storm-surge-damaged-boats-marina.jpeg",
+        alt: "Storm surge damaged boats leaning against a marina dock after coastal flooding",
+        caption: "Storm water does not stop at the beach. Marinas, docks, canals, and tied-up boats can take the hit too. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "storm surge damage",
+        focalPoint: "center center",
+        aspectClass: "aspect-[16/7]"
+      },
+      {
+        src: "/images/blog/storm-surge-and-high-tide/storm-surge-beach-debris-palms.jpeg",
+        alt: "Storm surge debris and broken waterfront structure near palm trees and calm water",
+        caption: "After the water drops, the damage can look deceptively calm. Surge can move heavy debris and leave hazards behind. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "after the water",
+        focalPoint: "center center"
+      },
+      {
+        src: "/images/blog/storm-surge-and-high-tide/storm-surge-exposed-dock-low-water.jpeg",
+        alt: "Old dock pilings exposed at low water on a calm coast",
+        caption: "The normal tide cycle still matters during storm season because it changes the starting water level. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "tide timing",
+        focalPoint: "center center"
+      },
+      {
+        src: "/images/blog/storm-surge-and-high-tide/storm-surge-canal-debris-dock.png",
+        alt: "Storm damaged waterfront canal with broken dock pieces and debris in the water",
+        caption: "Canals and backwaters can hold debris, damaged docks, and unsafe edges after storm water moves through. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "canal damage",
+        focalPoint: "center center"
+      },
+      {
+        src: "/images/blog/storm-surge-and-high-tide/storm-surge-yard-debris-utility-damage.png",
+        alt: "Storm debris, damaged utility lines, and household items beside a coastal home",
+        caption: "Surge and wind can leave hazards inland from the waterline, including debris, utilities, and unstable structures. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "inland hazards",
+        focalPoint: "center center"
+      },
+      {
+        src: "/images/blog/storm-surge-and-high-tide/storm-surge-waterfront-structure-damage.png",
+        alt: "Damaged waterfront structure and palm trees beside a canal after storm surge",
+        caption: "Low roads, waterfront homes, docks, and shoreline structures can all be affected when surge lines up with high water. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "waterfront impact",
+        focalPoint: "center center"
+      }
+    ],
+    sections: [
+      {
+        heading: "High tide can make storm surge worse",
+        paragraphs: [
+          "When a tropical storm or hurricane is near the coast, high tide can make a bad water situation worse. Storm surge is water pushed toward shore by the storm. High tide is the normal tide cycle. When those two line up, water can reach places that are usually dry.",
+          "That does not mean every high tide during a storm will flood the coast. It means tide timing belongs in the first set of checks, right next to the National Hurricane Center, your local National Weather Service office, evacuation guidance, beach flags, marine warnings, and local closures.",
+          "Tide Buoy helps with the tide part: what the water is doing now, whether the tide is coming in or going out, and when the next high or low tide arrives. During tropical weather, that is context. It is not permission to go near unsafe water.",
+          "Before storm conditions arrive, download Tide Buoy so your tide check is ready. Open it before you leave, check the current tide, tide direction, and next high or low tide, then compare that timing with NHC, NWS, and local guidance."
+        ],
+        imageIndexes: [0]
+      },
+      {
+        heading: "What Bertha showed on July 22",
+        paragraphs: [
+          "Tropical Storm Bertha is a current example. At 1:00 PM CDT on July 22, 2026, the National Hurricane Center said Bertha was near southeastern Louisiana with tropical storm warnings from the Alabama and Florida border to Morgan City, Louisiana, including Metropolitan New Orleans and Lake Pontchartrain. A tropical storm watch extended west of Morgan City to Sargent, Texas.",
+          "The same advisory listed possible storm surge of 1 to 3 feet from the Alabama and Florida border to Port Bolivar, Texas, and 1 to 3 feet for Lake Pontchartrain if peak surge occurred at high tide. NHC also warned that surge-related flooding depends on the timing of the surge and the tidal cycle, and that it can vary a lot over short distances.",
+          "That is exactly why a tide check matters. It does not replace the storm forecast, but it helps you understand whether the coast is already near a normal high-water window before wind, waves, rain, and surge add more water."
+        ],
+        imageIndexes: [1, 2]
+      },
+      {
+        heading: "Storm surge is not the same as high tide",
+        paragraphs: [
+          "High tide is predictable. It comes from the normal tide cycle.",
+          "Storm surge is different. NOAA describes it as an abnormal rise in seawater caused by a storm. Wind pushes water toward shore, pressure changes can add to the rise, and shallow coastal water can let that water build up near land.",
+          "Storm tide is the combined water level from storm surge plus the astronomical tide. In plain language: if a storm pushes water in at the same time the normal tide is high, the coast can flood more easily."
+        ]
+      },
+      {
+        heading: "Why timing matters",
+        paragraphs: [
+          "If peak surge arrives near low tide, the total water level may be lower than it would be at high tide. If peak surge arrives near high tide, water starts from a higher base.",
+          "That timing can affect roads near bays and marshes, boat ramps, docks, marinas, beach access points, low bridges, canals, inlets, and passes. Waves can ride on top of that water. Rain can back up drains and flood low roads. Debris can move into places that looked manageable earlier in the day.",
+          "The hard part is that surge does not arrive neatly at one exact minute for every location. A bay shape, barrier island, canal, inlet, storm track, wind direction, and local elevation can all change what happens."
+        ],
+        imageIndexes: [3]
+      },
+      {
+        heading: "What to check before going near the coast",
+        paragraphs: [
+          "Start with official storm information. For an active system like Bertha, check the NHC advisory and key messages first. Then check your local National Weather Service office for coastal flood warnings, marine warnings, rainfall, wind, surf, and rip-current risk.",
+          "After that, check the tide near the actual place you care about. Do not use a tide station from far away if you can avoid it. A beach, inlet, bay, marina, and river mouth can all have different timing and different water behavior.",
+          "In Tide Buoy, look at the current tide height, whether the tide is incoming or outgoing, the next high tide, the next low tide, and how close you are to the next high-water window."
+        ],
+        imageIndexes: [4]
+      },
+      {
+        heading: "A quick checklist by coastal user",
+        paragraphs: [
+          "For beachgoers, the safest move during tropical storm or hurricane surf is usually to stay out of the water. NHC warned that Bertha's swells were likely to cause life-threatening surf and rip-current conditions along the northern Gulf Coast. Do not treat a tide chart as a swim forecast.",
+          "For surfers, storm swell can look tempting, but wind, debris, current, closed beaches, and rescue conditions matter more than wave size. Do not paddle out around closed beaches, piers, inlets, or emergency conditions.",
+          "For boaters and fishermen, tide height matters at ramps, canals, docks, bridges, oyster bars, and shallow channels. Storm wind and surge can also make water levels misleading. A ramp that looks usable now may be dangerous later, and the return trip can be harder than the launch."
+        ],
+        imageIndexes: [5]
+      },
+      {
+        heading: "Tropical storm and hurricane tide checklist",
+        paragraphs: [
+          "Before going near the coast during a tropical storm or hurricane, keep the check plain and practical."
+        ],
+        items: [
+          "NHC advisories and key messages",
+          "Local NWS warnings and marine forecasts",
+          "Storm surge maps and coastal flood warnings",
+          "Rainfall and flash flood risk",
+          "Rip-current risk and beach flags",
+          "Local closures and evacuation guidance",
+          "Current tide and tide direction",
+          "Next high tide and next low tide",
+          "Whether peak weather may overlap with high tide"
+        ]
+      },
+      {
+        heading: "Where Tide Buoy fits",
+        paragraphs: [
+          "Tide Buoy helps you understand the tide quickly. It shows what the tide is doing now, whether the water is coming in or going out, and when the next high or low tide arrives.",
+          "That is useful during storm season because timing matters. It helps you avoid guessing whether the shoreline is naturally rising, falling, near high tide, or near low tide.",
+          "Tide Buoy is not a storm surge forecast, evacuation tool, beach closure alert, or rip-current forecast. During tropical weather, use Tide Buoy for tide context and use NHC, NWS, local officials, lifeguards, and emergency management for storm decisions.",
+          "If you live near the coast or check the water often, download Tide Buoy before the next storm window. It gives you a fast read on the current tide, tide direction, and next high or low tide, so the tide part of your hurricane checklist is already handled."
+        ]
+      },
+      {
+        heading: "The bottom line",
+        paragraphs: [
+          "Storm surge is dangerous because it adds water where people, roads, docks, and buildings are not ready for it. High tide can raise the starting line.",
+          "Before you go, check the current tide, tide direction, and next high or low tide in Tide Buoy. Download the app so that check is quick when a tropical storm, hurricane, king tide, or coastal flood warning shows up. Then check NHC, NWS, and local guidance. If officials say to stay away from the water, stay away from the water."
+        ]
+      }
+    ]
+  },
+  {
     slug: "el-nino-surf-fishing",
     title: "How El Nino Can Affect Surf and Fishing",
     metaTitle: "How El Nino Affects Surf and Fishing | Tide Buoy",
