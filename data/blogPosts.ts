@@ -37,6 +37,152 @@ export type BlogImage = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "key-west-lobster-season-tide-guide",
+    title: "Key West Tide Guide for Lobster Season: Ramps, Reefs, and Return Trips",
+    metaTitle: "Key West Tide Guide for Lobster Season | Tide Buoy",
+    metaDescription:
+      "Planning lobster season in Key West? Check tide timing, tide direction, ramps, reefs, weather, rules, and the ride home before you launch.",
+    excerpt:
+      "Regular Florida lobster season is open. Use this Key West tide guide to plan around ramps, reefs, shallow water, current, and the return trip.",
+    category: "Florida Keys",
+    readTime: "7 min read",
+    datePublished: "2026-08-20",
+    dateModified: "2026-08-20",
+    seoTags: ["Key West tide chart", "Key West lobster season", "Florida Keys lobster season", "lobster season tides", "boating tides", "diving tides"],
+    images: [
+      {
+        src: "/images/use-cases/diving/diving-coral.jpeg",
+        alt: "Snorkeler swimming over clear blue reef water and coral",
+        caption: "Key West lobster season is built around clear water, reefs, boats, and a tide window that makes sense. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "reef water",
+        focalPoint: "center center",
+        aspectClass: "aspect-[3/4]"
+      },
+      {
+        src: "/images/use-cases/diving/diving-freediver.jpeg",
+        alt: "Freediver swimming underwater in clear coastal water",
+        caption: "For snorkelers and divers, tide direction and current matter as much as the time you leave the dock. Photo: Brad Booth, bradboothmedia.com.",
+        tag: "dive timing",
+        focalPoint: "center center",
+        aspectClass: "aspect-[3/4]"
+      },
+      {
+        src: "/images/blog/key-west-lobster-season-tide-guide/key-west-tide-buoy-app-screenshot.png",
+        alt: "Tide Buoy app screenshot showing the Key West Florida tide chart for August 20 2026",
+        caption: "For Key West, start with the local tide, the tide direction, and the next high or low tide before you launch.",
+        tag: "local tide check",
+        focalPoint: "center center",
+        aspectClass: "aspect-[9/16]"
+      },
+      {
+        src: "/images/app-screenshots/marketing/seven-day-tide-forecast.jpg",
+        alt: "Tide Buoy app screenshot showing a seven day tide forecast",
+        caption: "Use the forecast view to compare morning, afternoon, and return windows before committing to the day.",
+        tag: "look ahead",
+        focalPoint: "center center",
+        aspectClass: "aspect-[9/16]"
+      },
+      {
+        src: "/images/app-screenshots/marketing/save-different-spots.jpg",
+        alt: "Tide Buoy app screenshot showing saved coastal spots",
+        caption: "Save the ramps, reefs, channels, and Keys spots you check often so tide planning stays quick.",
+        tag: "saved spots",
+        focalPoint: "center center",
+        aspectClass: "aspect-[9/16]"
+      }
+    ],
+    sections: [
+      {
+        heading: "Regular lobster season is open",
+        paragraphs: [
+          "Regular Florida spiny lobster season opened August 6, 2026, and Key West is back in one of its busiest on-water windows of the year.",
+          "Before you launch, check the tide. Not just the high and low times, but the current tide, tide direction, and when the next high or low tide happens.",
+          "Around Key West, that simple check can affect the ramp, the reef, shallow water, bridge clearance, current, visibility, and the ride home. Tide Buoy will not tell you where lobster are or whether an area is legal. It helps with the tide part of the plan, which is usually one of the first things worth knowing."
+        ],
+        imageIndexes: [0]
+      },
+      {
+        heading: "Why tide matters for Key West lobster trips",
+        paragraphs: [
+          "A lobster trip is rarely just one thing. It can be a boating trip, a snorkeling trip, a diving trip, and a navigation decision all at once.",
+          "The tide changes how much water you have under the boat. It changes how shallow flats, cuts, canals, ramps, and reef approaches feel. It can make an easy morning launch feel different from an afternoon return.",
+          "That matters more during lobster season because the water gets crowded. More boats are moving through ramps, channels, marinas, and popular dive areas. A tide mistake that might be annoying on a quiet day can become a bigger problem when everyone is trying to launch, anchor, dive, and return at the same time."
+        ],
+        imageIndexes: [1]
+      },
+      {
+        heading: "Start with the Key West tide chart",
+        paragraphs: [
+          "A Key West tide chart gives you the shape of the day. Look at what the tide is doing now, whether water is rising or falling, when the next high tide arrives, and when the next low tide arrives.",
+          "That gives you a better sense of the full trip, not just the moment you leave the dock. If you launch with plenty of water but return near a lower tide, the ramp or approach may feel different. If you cross shallow areas on a falling tide, you may have less margin later.",
+          "The point is not to find one perfect tide. The point is to avoid being surprised."
+        ],
+        imageIndexes: [2]
+      },
+      {
+        heading: "High tide or low tide?",
+        paragraphs: [
+          "There is no single best tide for every Key West lobster trip.",
+          "Higher water can help with access. It may give you more room over shallow bottom, more comfort around ramps, and a little more forgiveness near skinny water. But higher water does not automatically mean easier diving or better visibility.",
+          "Lower water can make some shallow bottom easier to read, but it can also expose trouble. Sandbars, flats, rocks, grass, and shallow approaches become less forgiving. Low water can also make some ramps harder to use, especially with a loaded boat and a crowd behind you.",
+          "For most people, the better question is: what tide gives me enough water for the whole route out and back?"
+        ]
+      },
+      {
+        heading: "Incoming vs outgoing tide",
+        paragraphs: [
+          "Tide direction matters because moving water changes the feel of a spot.",
+          "An incoming tide can bring more water into shallow areas and may give boaters more room as the day goes on. An outgoing tide can pull water off flats, out of cuts, and through channels. Around bridges, passes, reef edges, and narrow areas, that moving water can create stronger current than a beginner expects.",
+          "For snorkelers and divers, current is not a detail. It affects where you enter, how hard you work, how close you stay to the boat, and how quickly the plan can change. For boaters, tide direction affects anchoring, drifting, docking, and the return line.",
+          "Do not use tide direction alone to decide whether conditions are safe. Pair it with the marine forecast, wind, storms, visibility, boat traffic, and your actual experience level."
+        ]
+      },
+      {
+        heading: "Rules and safety checks still come first",
+        paragraphs: [
+          "FWC lists the regular spiny lobster season as August 6 through March 31, with a daily recreational bag limit of six per person. FWC also requires legal-size lobster to be measured in the water, and harvesters need the proper saltwater fishing license and lobster permit unless exempt.",
+          "The Florida Keys have extra local and sanctuary rules. Some areas are closed to harvest year-round, including no-take zones in the Florida Keys National Marine Sanctuary and other protected areas. Keys guidance also warns boaters and divers to follow dive-flag rules, avoid damaging coral, and respect shoreline, canal, marina, and local restrictions.",
+          "Treat this article as tide-planning help, not a regulation sheet. Before you go, confirm current FWC rules, Monroe County and Key West restrictions, sanctuary boundaries, no-take zones, local closures, and any on-water safety guidance."
+        ],
+        imageIndexes: [3]
+      },
+      {
+        heading: "What else to check before you launch",
+        paragraphs: [
+          "Tide is the first check, not the only check.",
+          "Look at the National Weather Service Key West marine forecast, wind, thunderstorms, visibility, wave conditions, and tropical weather. August in the Keys can change quickly. A tide window that looks good in the app still needs a safe weather window on the water.",
+          "Red tide and water quality are separate from the tide, too. Tide Buoy can tell you tide timing. It cannot tell you whether algae, visibility, reef conditions, marine warnings, or local closures have changed."
+        ]
+      },
+      {
+        heading: "Key West lobster season tide checklist",
+        paragraphs: [
+          "Before a lobster trip, keep the tide check simple."
+        ],
+        items: [
+          "Check the current tide near Key West or your actual launch area",
+          "Check whether the tide is incoming or outgoing",
+          "Check the next high tide and next low tide",
+          "Think about the launch and the return, not just the first stop",
+          "Watch shallow routes, ramps, flats, bridges, canals, and channels",
+          "Check the NWS Key West marine forecast before leaving",
+          "Confirm current FWC lobster rules and local restrictions",
+          "Confirm sanctuary, no-take, and closed areas",
+          "Watch for storms, wind, visibility, boat traffic, and dive flags",
+          "Leave yourself more margin than you think you need"
+        ],
+        imageIndexes: [4]
+      },
+      {
+        heading: "The bottom line",
+        paragraphs: [
+          "A good Key West lobster trip starts with knowing what the water is doing. A better one also accounts for what the water will be doing later.",
+          "Before you launch for lobster season in Key West, check the current tide, tide direction, and next high or low tide in Tide Buoy. Then check the rules, marine forecast, sanctuary guidance, and local conditions before you go."
+        ]
+      }
+    ]
+  },
+  {
     slug: "storm-surge-and-high-tide",
     title: "Storm Surge and High Tide: A Tropical Storm and Hurricane Checklist",
     metaTitle: "Storm Surge and High Tide | Hurricane Tide Checklist | Tide Buoy",

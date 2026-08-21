@@ -213,7 +213,7 @@ export const useCasePages: UseCasePage[] = [
       }
     ],
     relatedFeatureSlugs: ["live-fishing-and-lunar-data", "accurate-tides-in-your-location", "save-different-spots"],
-    relatedBlogSlugs: ["best-tide-for-fishing", "florida-scallop-season-tide-guide"],
+    relatedBlogSlugs: ["best-tide-for-fishing", "key-west-lobster-season-tide-guide"],
     relatedUseCaseSlugs: ["boating", "beach-days"]
   },
   {
@@ -391,7 +391,7 @@ export const useCasePages: UseCasePage[] = [
       }
     ],
     relatedFeatureSlugs: ["accurate-tides-in-your-location", "choose-any-new-location-on-map", "seven-day-tide-forecast"],
-    relatedBlogSlugs: ["florida-scallop-season-tide-guide", "best-tide-for-fishing"],
+    relatedBlogSlugs: ["key-west-lobster-season-tide-guide", "florida-scallop-season-tide-guide"],
     relatedUseCaseSlugs: ["fishing", "diving"]
   },
   {
@@ -478,7 +478,7 @@ export const useCasePages: UseCasePage[] = [
       }
     ],
     relatedFeatureSlugs: ["accurate-tides-in-your-location", "save-different-spots", "seven-day-tide-forecast"],
-    relatedBlogSlugs: ["florida-scallop-season-tide-guide", "florida-beach-day-tide-checklist"],
+    relatedBlogSlugs: ["key-west-lobster-season-tide-guide", "florida-scallop-season-tide-guide"],
     relatedUseCaseSlugs: ["boating", "beach-days"]
   }
 ];
