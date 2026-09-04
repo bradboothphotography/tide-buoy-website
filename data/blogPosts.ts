@@ -37,6 +37,202 @@ export type BlogImage = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "best-tide-app-diving-snorkeling",
+    title: "Best Tide App for Diving and Snorkeling: Current, Slack Water, Entry, and Exit",
+    metaTitle: "Best Tide App for Diving and Snorkeling | Tide Buoy",
+    metaDescription:
+      "Looking for the best tide app for diving or snorkeling? Learn how to check tide timing, tide direction, slack water, entry, exit, and local conditions before you go.",
+    excerpt:
+      "Diving and snorkeling plans get easier when the tide part is clear: current tide, water direction, and the next high or low before you get in.",
+    category: "Diving",
+    readTime: "7 min read",
+    datePublished: "2026-09-04",
+    dateModified: "2026-09-04",
+    seoTags: ["best tide app for diving", "snorkeling app", "tide app for divers", "best tide for snorkeling", "slack tide diving", "diving tide chart"],
+    images: [
+      {
+        src: "/images/use-cases/diving/diving-coral.jpeg",
+        alt: "Swimmer moving above coral in clear blue water",
+        caption: "For divers and snorkelers, tide often shows up as current, depth, entry comfort, and visibility.",
+        tag: "underwater check",
+        focalPoint: "center center",
+        aspectClass: "aspect-[3/4]"
+      },
+      {
+        src: "/images/app-screenshots/marketing/accurate-tides-in-your-location.jpg",
+        alt: "Tide Buoy app screenshot showing accurate tides for the user's location",
+        caption: "Tide Buoy keeps the first read simple: current tide, direction, and the next high or low.",
+        tag: "quick tide read",
+        focalPoint: "center center",
+        aspectClass: "aspect-[9/16]"
+      },
+      {
+        src: "/images/use-cases/diving/diving-freediver.jpeg",
+        alt: "Freediver descending below the surface in blue water",
+        caption: "Slack-water timing can matter near inlets, cuts, reef edges, bridges, and other current-prone sites.",
+        tag: "dive window",
+        focalPoint: "center center",
+        aspectClass: "aspect-[3/4]"
+      },
+      {
+        src: "/images/app-screenshots/marketing/save-different-spots.jpg",
+        alt: "Tide Buoy app screenshot showing saved coastal spots",
+        caption: "Save the reefs, beaches, ramps, and shore entries you check often so repeat decisions stay fast.",
+        tag: "saved spots",
+        focalPoint: "center center",
+        aspectClass: "aspect-[9/16]"
+      },
+      {
+        src: "/images/use-cases/diving/diving-silhouette.jpeg",
+        alt: "Freediver seen in silhouette below the bright water surface",
+        caption: "Tide is one part of the plan. Pair it with weather, visibility, local rules, and your own comfort level.",
+        tag: "surface check",
+        focalPoint: "center center",
+        aspectClass: "aspect-[4/3]"
+      },
+      {
+        src: "/images/app-screenshots/marketing/choose-any-new-location-on-map.jpg",
+        alt: "Tide Buoy app screenshot showing the map picker for choosing a new tide location",
+        caption: "The map picker helps when you are comparing a new beach, reef, inlet, ramp, or nearby backup spot.",
+        tag: "map check",
+        focalPoint: "center center",
+        aspectClass: "aspect-[9/16]"
+      }
+    ],
+    sections: [
+      {
+        heading: "The best diving tide app should answer one thing fast",
+        paragraphs: [
+          "The best tide app for diving and snorkeling is the one that helps you answer the tide question quickly: what is the water doing right now, which direction is it moving, and when is the next high or low tide?",
+          "That sounds simple, but it matters. Divers and snorkelers feel tide through current, depth, entry comfort, exit timing, and sometimes visibility. A site that feels easy during one part of the tide can feel very different once water starts pushing through an inlet, reef cut, channel, bridge, or shallow flat.",
+          "Tide Buoy is built for that first read. Open the app, check the current tide, see whether it is incoming or outgoing, and look at the next tide change before you commit to the water."
+        ],
+        imageIndexes: [0, 1]
+      },
+      {
+        heading: "Why tide matters for diving and snorkeling",
+        paragraphs: [
+          "Tide is not just a number on a chart. For divers and snorkelers, it can change the whole feel of a spot.",
+          "Higher water may give you more depth over rocks, coral, grass flats, or a shallow entry. Lower water may expose structure, tighten a channel, make a reef shallower, or turn a simple exit into a long walk over uneven bottom.",
+          "Tide direction matters too. Incoming water can feel different from outgoing water, especially near inlets, passes, bridges, cuts, and reef edges. Sometimes incoming water brings cleaner ocean water into a site. Sometimes outgoing water pulls sediment, runoff, or warmer backwater across the area. That depends on the location, weather, swell, recent rain, bottom type, and local geography.",
+          "The tide helps you choose a window. It does not make the whole decision for you."
+        ],
+        imageIndexes: [2]
+      },
+      {
+        heading: "Tide and current are related, but they are not the same",
+        paragraphs: [
+          "This is the biggest beginner mistake: tide is the rise and fall of water level. Current is the horizontal movement of water. Tides can create tidal currents, but the timing is not always as simple as high tide means slack water or low tide means slack water.",
+          "NOAA explains that the relationship between high or low tide and slack water is unique by location. At some places, slack water may happen close to high or low tide. At others, maximum current or slack can happen at a different point in the tide cycle.",
+          "If you are planning a current-sensitive dive, a snorkel around a cut, or a shore entry near moving water, use the tide chart as your first check, then look for local current predictions, marine forecasts, dive operator guidance, lifeguard guidance, or site-specific knowledge.",
+          "Tide Buoy keeps the tide part clear. For current-heavy sites, pair that with official current predictions or local guidance before getting in."
+        ]
+      },
+      {
+        heading: "What divers and snorkelers should check before going",
+        paragraphs: [
+          "Start with the tide because it shapes the day early.",
+          "That may sound like a lot, but the tide part should not take long. Tide Buoy is useful because it keeps the first tide read clean: current tide, direction, and next high or low without forcing you through a complicated planning screen."
+        ],
+        items: [
+          "Current tide height",
+          "Whether the tide is incoming or outgoing",
+          "Time of the next high tide",
+          "Time of the next low tide",
+          "Whether the tide window is getting easier or tighter for your entry and exit",
+          "Current predictions where they are available",
+          "Wind, swell, storms, and marine forecasts",
+          "Visibility reports or local dive-shop updates",
+          "Beach flags, lifeguard guidance, and dangerous-current information",
+          "Red tide, harmful algal bloom, water-quality, or local health notices where relevant",
+          "Sanctuary, reef, harvest, access, and anchoring rules"
+        ]
+      },
+      {
+        heading: "What makes a good tide app for divers",
+        paragraphs: [
+          "A good tide app for divers should help you make a practical call fast. For diving and snorkeling, the best tide app is not necessarily the app with the most data crammed onto one screen. It is the app that makes the tide easy to understand before you layer on everything else.",
+          "That is where Tide Buoy fits. It is tide-first, visual, and built for quick checks on iPhone."
+        ],
+        items: [
+          "Is the tide rising or falling?",
+          "How close am I to the next change?",
+          "Is this site getting deeper or shallower?",
+          "Will the exit be easier or harder later?",
+          "Should I save this spot so I can check it again quickly?",
+          "Do I need to compare a nearby beach, reef, inlet, or ramp?"
+        ],
+        imageIndexes: [3]
+      },
+      {
+        heading: "How Tide Buoy fits a real dive or snorkel routine",
+        paragraphs: [
+          "Before you load gear, open Tide Buoy and check the spot you are considering.",
+          "Look at the current tide. Check whether it is coming in or going out. Look at the next high or low tide. If the window looks wrong for that site, compare another saved spot or use the map to check a nearby location.",
+          "Then do the rest of the plan. Check the local marine forecast, look at wind and swell, confirm visibility if local reports are available, check beach, park, sanctuary, or access rules, and make sure the plan fits your skill level and conditions.",
+          "Tide Buoy does not replace the safety check. It makes the tide check faster so you can make the rest of the decision with a clearer starting point."
+        ],
+        imageIndexes: [5]
+      },
+      {
+        heading: "Shore snorkeling",
+        paragraphs: [
+          "For a casual shore snorkel, tide can affect how easy it is to get in and out. At some beaches, higher water gives you more room over rocks or reef. At others, lower water may reveal tide pools, shallow structure, or sandbars, but it can also make the entry more awkward.",
+          "If you are taking beginners, kids, or visiting friends, do not just ask whether it is high tide or low tide. Ask what the tide is doing next.",
+          "An outgoing tide may mean the water is dropping while you are still out there. An incoming tide may cover shallow areas quickly. Neither is automatically good or bad. The right call depends on the spot."
+        ]
+      },
+      {
+        heading: "Inlets, passes, and channels",
+        paragraphs: [
+          "Inlets and passes deserve extra caution because water can move hard through narrow areas. This is where the tide and current distinction matters most.",
+          "A tide chart can tell you whether water level is rising or falling. It does not always tell you exactly when the current will slacken at that site. If current is a major part of the dive, check official current predictions where available and listen to local guidance.",
+          "For Tide Buoy, the job is simple: help you see the tide direction and next change quickly. That gives you the first piece of the plan before you check current-specific information."
+        ]
+      },
+      {
+        heading: "Boat dives and reef trips",
+        paragraphs: [
+          "On boat days, tide still matters even if you are not walking in from shore.",
+          "Tide can affect ramps, shallow channels, docks, mooring approaches, and the ride back. A trip that launches comfortably on higher water can feel tighter later if the tide drops while you are offshore. A shallow sandbar or channel may be no problem in the morning and a real issue on the return.",
+          "Before leaving, check the tide for the launch area and the dive area when possible. Save both spots in Tide Buoy if you use them often."
+        ],
+        imageIndexes: [4]
+      },
+      {
+        heading: "Scalloping, lobster, and grass-flat snorkeling",
+        paragraphs: [
+          "Some snorkeling days are also harvest days. Scalloping, lobster season, and grass-flat trips bring extra planning.",
+          "Tide can change grass-flat depth, visibility, boat positioning, and how easy it is to move around safely. But tide does not tell you whether harvest is legal, whether an area is closed, whether water quality is safe, or whether a sanctuary rule applies.",
+          "Use Tide Buoy for tide timing. Use official state, sanctuary, and local sources for rules and closures."
+        ]
+      },
+      {
+        heading: "Common mistakes to avoid",
+        paragraphs: [
+          "The tide is one of the first things to check. It is not the only thing to check."
+        ],
+        items: [
+          "Do not assume high tide always means easy diving.",
+          "Do not assume low tide is always bad.",
+          "Do not assume slack water happens exactly at high or low tide.",
+          "Do not use tide alone as a visibility forecast.",
+          "Do not forget the exit or return trip.",
+          "Do not ignore wind, swell, weather, local rules, health notices, or dangerous-current guidance."
+        ]
+      },
+      {
+        heading: "Quick answers",
+        paragraphs: [
+          "Is slack tide best for diving? Slack water is often preferred at current-sensitive sites because water movement may be more manageable. But slack timing does not always match high or low tide, and the relationship varies by location.",
+          "Is high tide or low tide better for snorkeling? It depends on the spot. High tide may give more depth over shallow bottom and make some entries easier. Low tide may expose tide pools, sandbars, or shallow structure.",
+          "Can Tide Buoy predict visibility? No. Tide Buoy helps with tide timing, tide direction, and the next high or low tide. Visibility can also depend on wind, swell, runoff, rain, algae, boat traffic, and local bottom conditions.",
+          "Before you dive or snorkel, start with the tide. Open Tide Buoy. Check the current tide. See whether it is incoming or outgoing. Look at the next high or low tide. Then pair that with local weather, current, visibility, and safety guidance before you go."
+        ]
+      }
+    ]
+  },
+  {
     slug: "best-surf-tide-app",
     title: "Best Surf Tide App: What Surfers Should Check Before Paddling Out",
     metaTitle: "Best Surf Tide App for Simple Tide Checks | Tide Buoy",

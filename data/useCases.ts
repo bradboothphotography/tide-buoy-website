@@ -391,7 +391,7 @@ export const useCasePages: UseCasePage[] = [
       }
     ],
     relatedFeatureSlugs: ["accurate-tides-in-your-location", "choose-any-new-location-on-map", "seven-day-tide-forecast"],
-    relatedBlogSlugs: ["key-west-lobster-season-tide-guide", "florida-scallop-season-tide-guide"],
+    relatedBlogSlugs: ["best-tide-app-diving-snorkeling", "key-west-lobster-season-tide-guide", "florida-scallop-season-tide-guide"],
     relatedUseCaseSlugs: ["fishing", "diving"]
   },
   {
