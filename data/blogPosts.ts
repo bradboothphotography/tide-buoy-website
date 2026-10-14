@@ -1,3 +1,5 @@
+import { incomingTideArticle } from "./incomingTideArticle";
+
 export type BlogPost = {
   slug: string;
   title: string;
@@ -36,6 +38,7 @@ export type BlogImage = {
 };
 
 export const blogPosts: BlogPost[] = [
+  incomingTideArticle,
   {
     slug: "best-tide-app-diving-snorkeling",
     title: "Best Tide App for Diving and Snorkeling: Current, Slack Water, Entry, and Exit",
