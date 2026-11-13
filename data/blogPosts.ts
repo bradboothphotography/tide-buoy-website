@@ -1,4 +1,5 @@
 import { incomingTideArticle } from "./incomingTideArticle";
+import { fortLauderdaleTideChartPreview } from "./fortLauderdaleTideChartPreview";
 
 export type BlogPost = {
   slug: string;
@@ -38,6 +39,7 @@ export type BlogImage = {
 };
 
 export const blogPosts: BlogPost[] = [
+  fortLauderdaleTideChartPreview,
   incomingTideArticle,
   {
     slug: "best-tide-app-diving-snorkeling",
